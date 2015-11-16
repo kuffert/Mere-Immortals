@@ -23,7 +23,7 @@ public class GameSystem : MonoBehaviour {
     private Season season;
     private Vector2 currentWeather;
     private Sprite currentWeatherSprite;
-    private List<Player> players;
+	private List<Player> players = new List<Player>();
     private Player playerWhosTurnItIs;
 
     
@@ -46,6 +46,15 @@ public class GameSystem : MonoBehaviour {
         // 1. create x new players, where x = "numberOfPlayers"
         // 2. add those players to the list: "players"
         // 3. set the first player on the list to be "playerWhosTurnItIs"
+		for (int i = 0; i < this.numberOfPlayers; i++) {
+			this.players.Add (new Player("Player " + (i + 1)));
+			print (this.players[i].characterName);
+			for (int j = 0; j < this.players[i].hand.Count; j++){
+				print (this.players[i].hand[j]);
+			}
+		}
+		this.playerWhosTurnItIs = this.players [0];
+
 	
 	}
 	
