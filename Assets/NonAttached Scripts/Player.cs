@@ -4,12 +4,14 @@ using System.Collections.Generic;
 public class Player {
 
 	public string characterName;
+    public int favor;
 	public List<Card> hand = new List<Card> ();
 	public Sprite cardBack;
 
 
 	public Player(){
 		this.characterName = "";
+        this.favor = 0;
 		drawCards ();
 	}
 	public Player(string aCharacterName){
@@ -18,7 +20,7 @@ public class Player {
 	}
 
 	//one more card in your hand than the number of players
-	void drawCards(){
+	public void drawCards(){
 		int cardType;
 		while (this.hand.Count <= GameSystem.gameSystem.numberOfPlayers) {
 

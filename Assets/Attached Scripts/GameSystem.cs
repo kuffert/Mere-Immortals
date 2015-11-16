@@ -25,7 +25,13 @@ public class GameSystem : MonoBehaviour {
     private Sprite currentWeatherSprite;
 	private List<Player> players = new List<Player>();
     private Player playerWhosTurnItIs;
+    private int numberOfPlayersWhoHavePlayedThisSeason;
+    private Player playerWhoIsPlayingCards;
+    private int numberOfPlayersWhoHavePlayedThisDIPhase;
+    private bool divineInterventionPhaseActive;
 
+    // These are private and only exist for code redability
+    private Vector2 neutral = new Vector2(0, 0);
     
     void Awake()
     {
@@ -41,25 +47,67 @@ public class GameSystem : MonoBehaviour {
     }
 
 	void Start () {
-
         season = new Summer();
+        currentWeather = new Vector2(0, 0);
+        currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
+
         // 1. create x new players, where x = "numberOfPlayers"
         // 2. add those players to the list: "players"
         // 3. set the first player on the list to be "playerWhosTurnItIs"
-		for (int i = 0; i < this.numberOfPlayers; i++) {
-			this.players.Add (new Player("Player " + (i + 1)));
-			print (this.players[i].characterName);
-			for (int j = 0; j < this.players[i].hand.Count; j++){
-				print (this.players[i].hand[j]);
+		for (int i = 0; i < numberOfPlayers; i++) {
+			players.Add (new Player("Player " + (i + 1)));
+			print (players[i].characterName);
+			for (int j = 0; j < players[i].hand.Count; j++){
+				print (players[i].hand[j]);
 			}
 		}
-		this.playerWhosTurnItIs = this.players [0];
-
-	
-	}
+		playerWhosTurnItIs = players[0];
+        numberOfPlayersWhoHavePlayedThisSeason = 0;
+        playerWhoIsPlayingCards = players[1];
+        numberOfPlayersWhoHavePlayedThisDIPhase = 0;
+        divineInterventionPhaseActive = false;
+    }
 	
 	void Update () {
-	
+
+        // 1. Checks win condition
+        if (checkWin())
+        {
+            // Do the winning thing here
+        }
+
+        // 2. Players redraw cards if all players have gone. (in the final version, if the season changes. For now though, just if all players have gone)
+        if (numberOfPlayers == numberOfPlayersWhoHavePlayedThisSeason)
+        {
+            allPlayersRedraw();
+            numberOfPlayersWhoHavePlayedThisSeason = 0;
+        }
+
+        // 3. Display the playerWhoIsPlayingCards cards.
+
+        //[loop while doing this] 
+        // 4. If a card is tapped, set it as "selected," add that card to their list of played cards when they press "done"
+
+        // 5. Once they've pressed the done button, increment the numberOfPlayersWhoHavePlayedThisDIPhase
+        // 6. If that number == number of players, increment numberOfPlayerwhoHavePlayedThisSeason, set DI phase == true
+        // then, call setNextPlayerWhoIsPlayingCards
+        numberOfPlayersWhoHavePlayedThisDIPhase++;
+        if (numberOfPlayersWhoHavePlayedThisDIPhase == numberOfPlayers)
+        {
+            numberOfPlayersWhoHavePlayedThisDIPhase = 0;
+            numberOfPlayersWhoHavePlayedThisSeason++;
+            setNextPlayerWhosTurnItIs();
+            divineInterventionPhaseActive = true;
+        }
+        setNextPlayerWhoIsPlayingCards();
+
+        // 7. If DI phase is true
+        if (divineInterventionPhaseActive)
+        {
+            divineInterventionPhaseActive = false;
+            // Do the DI Stuff here
+        }
+
 	}
 
     // Once all players have played their cards, this function will calculate the new current weather 
@@ -95,5 +143,54 @@ public class GameSystem : MonoBehaviour {
         //                  - decrement the town health by the sometimesBadHealthEffect field
         //                  - decrement the current player's favor by the sometimesBadFavorEffect
 
+    }
+
+    // Finds the "next" player. Makes sure to cycle through the array of players to find the next.
+    private void setNextPlayerWhoIsPlayingCards()
+    {
+        //1. Get the index of the playerWhoIsPlayingCards
+
+        // If the numberOfPlayersWhoHavePlayedThisDIPhase == numberOfPlayers
+        // Set the next player to be
+
+        //2. if the index is less than the length of the list minus one, set the playerWhoIsPlayingCards to be the i+1 player
+
+        //3. If is not, set it to the 0th player.
+    }
+
+    // Finds the next player's turn.
+    private void setNextPlayerWhosTurnItIs()
+    {
+        //1. get the index of the playerWhosTurnItIs
+
+        //2. if the number of players played this season is equal to the number of players, set the player who's turn it is to i+2 (check if it loops around)
+
+        // if not...
+
+        //. If the index is less than the length of the list minus one, set the playerWhoIsPlayingCards to be the i+1 player
+
+        //. if not, set it to the 0th player
+    }
+
+    // Check if any player has won
+    private bool checkWin()
+    {
+        foreach (Player player in players)
+        {
+            if (player.favor >= favorToWin)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // All player's redraw cards
+    private void allPlayersRedraw()
+    {
+        foreach(Player player in players)
+        {
+            player.drawCards();
+        }
     }
 }
