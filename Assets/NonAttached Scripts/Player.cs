@@ -4,10 +4,11 @@ using System.Collections.Generic;
 public class Player {
 
 	public string characterName;
+    public bool hasCommittedCards = false;
     public int favor;
 	public List<Card> hand = new List<Card> ();
+    public List<Card> playedCards = new List<Card>();
 	public Sprite cardBack;
-
 
 	public Player(){
 		this.characterName = "";
@@ -36,8 +37,34 @@ public class Player {
 				this.hand.Add (new humidCard(cardBack));
 			}
 		}
-
 	}
 
+    // @Matt just fill thous out with what it needs to do
+    public void adjustFavor(int favorEffect)
+    {
+        // Code that adds the favor effect to their favor
+    }
 
+    // @Matt this shit too
+    public void wipePlayedCards()
+    {
+        // This needs to empty the list of played cards completely, leaving it a blank list.
+    }
+
+    // @Matt this shit too
+    public void addSelectedCardsToPlayedCards()
+    {
+        // Needs to check their hand for cards with isSelected as true, remove them, and add them to their played cards list.
+    }
+
+
+    // @Matt this shit too
+    public Vector2 calculateEffectOfPlayedCards()
+    {
+        Vector2 totalEffectOfPlayedCards = new Vector2(0, 0);
+
+        // CODE GOES HERE BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIITCH
+
+        return totalEffectOfPlayedCards;
+    }
 }
