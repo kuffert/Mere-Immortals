@@ -7,7 +7,8 @@ public class dryCard : Card {
 		this.effect = new Vector2 (1, 0);
 		this.frontImage = dry;
 		this.backImage = bckimg;
-	}
+        this.isSelected = false;
+    }
 	
 }
 

@@ -25,7 +25,7 @@ public class Player {
 		int cardType;
 		while (this.hand.Count <= GameSystem.gameSystem.numberOfPlayers) {
 
-			//0=hot 1=dry 2=cold 3=humid (??)
+			//0=hot 1=dry 2=cold 3=humid
 			cardType = Random.Range (0,4);
 			if (cardType == 0) {
 				this.hand.Add (new hotCard (cardBack));
@@ -43,18 +43,33 @@ public class Player {
     public void adjustFavor(int favorEffect)
     {
         // Code that adds the favor effect to their favor
+        this.favor += favorEffect;
     }
 
     // @Matt this shit too
     public void wipePlayedCards()
     {
         // This needs to empty the list of played cards completely, leaving it a blank list.
+        for (int i = 0; i < this.playedCards.Count; i++)
+        {
+			this.playedCards.RemoveRange(0, this.playedCards.Count);
+        }
+
     }
 
     // @Matt this shit too
     public void addSelectedCardsToPlayedCards()
     {
         // Needs to check their hand for cards with isSelected as true, remove them, and add them to their played cards list.
+        for (int i = 0; i < this.hand.Count; i++)
+        {
+            if (this.hand[i].isSelected)
+            {
+                this.playedCards.Add(this.hand[i]);
+                this.hand.Remove(this.hand[i]);
+                i--;
+            }
+        }
     }
 
 
@@ -64,6 +79,10 @@ public class Player {
         Vector2 totalEffectOfPlayedCards = new Vector2(0, 0);
 
         // CODE GOES HERE BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIITCH
+		for (int i = 0; i < this.playedCards.Count; i++) {
+			totalEffectOfPlayedCards += this.playedCards [i].effect;
+		}
+
 
         return totalEffectOfPlayedCards;
     }

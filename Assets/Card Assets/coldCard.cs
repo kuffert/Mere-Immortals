@@ -7,6 +7,7 @@ public class coldCard : Card {
 		this.effect = new Vector2 (0, -1);
 		this.frontImage = cold;
 		this.backImage = bckimg;
-	}
+        this.isSelected = false;
+    }
 	
 }

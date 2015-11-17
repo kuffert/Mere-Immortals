@@ -7,6 +7,7 @@ public class humidCard : Card {
 		this.effect = new Vector2 (0, -1);
 		this.frontImage = humid;
 		this.backImage = bckimg;
+        this.isSelected = false;
 	}
 	
 }
