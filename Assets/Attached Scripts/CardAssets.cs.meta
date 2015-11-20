@@ -1,16 +1,14 @@
 fileFormatVersion: 2
-guid: 60e6ae6d9fad0954a98563d0db3cf456
-timeCreated: 1447963489
+guid: a8378cc6cd547d44c84cd4d4039933ca
+timeCreated: 1447978005
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - frontImage: {instanceID: 0}
-  - backImage: {fileID: 21300000, guid: 909408793608b064cb97caef6edf201c, type: 3}
   - hot: {fileID: 21300000, guid: e2ae5c46c6d325848b6771c0c068ea2e, type: 3}
-  - dry: {fileID: 21300000, guid: 9cffe507cd45591499f30b0bbfd79c4d, type: 3}
   - cold: {fileID: 21300000, guid: e56007628781ea64185f2e81cc3b9e24, type: 3}
   - humid: {fileID: 21300000, guid: ba3c9e0c81d5c8147b51b8469640a0d7, type: 3}
+  - dry: {fileID: 21300000, guid: 9cffe507cd45591499f30b0bbfd79c4d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

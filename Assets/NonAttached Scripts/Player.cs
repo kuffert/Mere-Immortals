@@ -10,15 +10,17 @@ public class Player {
     public List<Card> playedCards = new List<Card>();
 	public Sprite cardBack;
 
-	public Player(){
-		this.characterName = "";
-        this.favor = 0;
-		drawCards ();
-	}
-	public Player(string aCharacterName){
-		this.characterName = aCharacterName;
-		drawCards();
-	}
+    private float gapBetweenCards;
+    private float sideBuffer = .2f;
+    
+    public Player(string characterName, Sprite cardBack, int startingFavor)
+    {
+        this.characterName = characterName;
+        this.favor = startingFavor;
+        this.cardBack = cardBack;
+        drawCards();
+        gapBetweenCards = .6f / hand.Count;
+    }
 
 	//one more card in your hand than the number of players
 	public void drawCards(){
@@ -46,6 +48,26 @@ public class Player {
         this.favor += favorEffect;
     }
 
+    public List<GameObject> showCards()
+    {
+        List<GameObject> cardObjects = new List<GameObject>();
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            GameObject cardObject = new GameObject();
+            cardObject.AddComponent<SpriteRenderer>();
+            cardObject.GetComponent<SpriteRenderer>().sprite = this.hand[i].frontImage;
+            cardObjects.Add(cardObject);
+
+            cardObject.AddComponent<BoxCollider>();
+
+            cardObject.transform.localScale = new Vector3(.5f, .5f, 0f);
+
+            cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i * gapBetweenCards), .15f, 0f));
+        }
+        return cardObjects;
+    }
+
     // @Matt this shit too
     public void wipePlayedCards()
     {
@@ -58,7 +80,7 @@ public class Player {
     }
 
     // @Matt this shit too
-    public void addSelectedCardsToPlayedCards()
+    public void commitCards()
     {
         // Needs to check their hand for cards with isSelected as true, remove them, and add them to their played cards list.
         for (int i = 0; i < this.hand.Count; i++)
@@ -72,18 +94,31 @@ public class Player {
         }
     }
 
-
     // @Matt this shit too
     public Vector2 calculateEffectOfPlayedCards()
     {
         Vector2 totalEffectOfPlayedCards = new Vector2(0, 0);
-
-        // CODE GOES HERE BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIITCH
+        
 		for (int i = 0; i < this.playedCards.Count; i++) {
 			totalEffectOfPlayedCards += this.playedCards [i].effect;
 		}
 
-
         return totalEffectOfPlayedCards;
+    }
+    
+    public void updateCardPositions(List<GameObject> cardObjects)
+    {
+        foreach (GameObject cardObject in cardObjects)
+        {
+            int i = cardObjects.IndexOf(cardObject);
+            if (hand[cardObjects.IndexOf(cardObject)].isSelected)
+            {
+                cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i * gapBetweenCards), .3f, 10f));
+            }
+            else
+            {
+                cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i * gapBetweenCards), .15f, 10f));
+            }
+        }
     }
 }

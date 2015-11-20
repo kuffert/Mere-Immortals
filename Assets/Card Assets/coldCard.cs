@@ -8,6 +8,5 @@ public class coldCard : Card {
 		this.frontImage = cold;
 		this.backImage = bckimg;
         this.isSelected = false;
-    }
-	
+    }   
 }

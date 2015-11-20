@@ -18,23 +18,33 @@ public class GameSystem : MonoBehaviour {
     public int startingFavor;
     public int favorToWin;
     public int numberOfCards;
+    public TextMesh DebugText;
+    public TextMesh commitButton;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
 	private List<Player> players = new List<Player>();
 
+    // These are the card back images 
+
+    // list of card gameobjects that updates during each players turn
+    private List<GameObject> displayedCards;
+
     // These are game-specific, but the rendering scripts will need access to these by using getters.
     private Vector2 currentWeather;
     private Sprite currentWeatherSprite;
-    private Player currentTurnOwner;
     private Player currentMoveOwner;
+
+    // number of people who have played cards on a turn
+    private int movesPlayed;
+    // number of people who have had a turn during a season
+    private int turnsPlayed;
 
     // These are private and only exist for code redability
     private Vector2 neutral = new Vector2(0, 0);
 
     public Vector2 getCurrentWeather() { return currentWeather; }
     public Sprite getCurrentWeatherSprite() { return currentWeatherSprite; }
-    public Player getCurrenturnOwner() { return currentTurnOwner; }
     public Player getCurrentMoveOwner() { return currentMoveOwner; }
     
     void Awake()
@@ -50,62 +60,118 @@ public class GameSystem : MonoBehaviour {
         }
     }
 
-	void Start () {
+    void Start() {
         season = new Summer();
         currentWeather = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
 
-        // 1. create x new players, where x = "numberOfPlayers"
-        // (generate cards for those players too)
-        // 2. add those players to the list: "players"
-		for (int i = 0; i < numberOfPlayers; i++) {
-			players.Add (new Player("Player " + (i + 1)));
-			print (players[i].characterName);
-			for (int j = 0; j < players[i].hand.Count; j++){
-				print (players[i].hand[j]);
-			}
-		}
+        for (int i = 0; i < numberOfPlayers; i++) {
+            players.Add(new Player("Player " + (i + 1), CardAssets.cardAssets.allCardbacks[i], startingFavor));
+        }
+
+        DebugText.text = currentWeather.x + ", " + currentWeather.y;
+        currentMoveOwner = players[0];
+        displayedCards = players[0].showCards();
     }
 	
 	void Update () {
-        
+
+        if (checkLose())
+        {
+            Debug.Log("Sweet scrotum boi");
+            Application.Quit();
+        }
+
         if (checkWin())
         {
-            // Do the winning thing here
+            Debug.Log("Suck me off");
+            Application.Quit();
         }
 
-        // Main game loop
-        foreach(Player turnOwner in players)
+        // Show the current weather vector
+        DebugText.text = "(" + currentWeather.x + ", " + currentWeather.y + ") (" + currentMoveOwner.characterName + ") (" + currentMoveOwner.favor + " favor" + ") (" + townHealth + " Town Health)";
+
+        // Update card positions
+        currentMoveOwner.updateCardPositions(displayedCards);
+
+        // Check for cards being clicked
+        if (Input.GetMouseButtonDown(0))
         {
-            currentTurnOwner = turnOwner; // Allows access to the current TurnOwner outside of this loop.
-            List<Player> DIPhaseList = generateListOfPlayersExcludingCurrentTurnOwner(players.IndexOf(turnOwner));
-
-            foreach(Player moveOwner in DIPhaseList)
-            {
-                currentMoveOwner = moveOwner; // Allows access to the current MoveOwner outside of the loop.
-
-                /* LEAVE THIS COMMENTED UNTIL THIS BOOLEAN CAN BE CHANGED.
-                while (!moveOwner.hasCommittedCards)
-                {
-                    Debug.Log("Waiting for " + moveOwner.characterName + " to play cards.");
-                }
-                */
-                moveOwner.hasCommittedCards = false;
-            }
-            /* LEAVE THIS COMMENTED UNTIL THE BOOLEAN CAN BE CHANGED.
-            while (!turnOwner.hasCommittedCards)
-            {
-                Debug.Log("Waiting for " + turnOwner.characterName + " to play cards.");
-            }
-            */
-            calculateNewCurrentWeather();
-            determineDivineInterventionEffect();
-            wipeAllPlayedCards();
+            checkForCardClicks();
+            checkCommit();
         }
-        allPlayersRedraw();
-        adjustListOrderingForNextSeason();
-        currentTurnOwner = null;
-        currentMoveOwner = null;
+    }
+    
+    // Happens when a player commits his cards. Changes the current player to the
+    // next player, commits their cards, increments the number of people that have played,
+    // and changes the card objects being shown in the game world.
+    // If the max number of players have played, The season will change,  
+    void commitMove()
+    { 
+        currentMoveOwner.commitCards();
+
+        // increments the number of people who have played during this TURN, NOT DURING THE ROUND
+        movesPlayed++;
+
+        // If all players have played, enact divine intervention
+        if (movesPlayed == numberOfPlayers)
+        {
+            movesPlayed = 0;
+            turnsPlayed++;
+            calculateNewCurrentWeather();
+            calculateDivineInterventionEffect();
+            // Current turn owner should not change.
+        }
+        // Otherwise move the current player to the next index, looping around if needed.
+        else
+        {
+            int indexOfMoveOwner = players.IndexOf(currentMoveOwner);
+            if (indexOfMoveOwner + 1 < players.Count)
+            {
+                currentMoveOwner = players[indexOfMoveOwner + 1];
+            }
+            else currentMoveOwner = players[0];
+        }
+
+        // If all players have had a turn, change the season
+        if (turnsPlayed == numberOfPlayers)
+        {
+            turnsPlayed = 0;
+            //changeSeason();
+            wipeAllPlayedCards();
+            allPlayersRedraw();
+        }
+        
+        clearDisplayedCards();
+        displayedCards = currentMoveOwner.showCards();
+        Debug.Log("Current move owner: " + currentMoveOwner + " | moves played: " + movesPlayed + " | turns played " + turnsPlayed);
+    }
+
+    // Checks to see if, upon a click, the click should move a card.
+    void checkForCardClicks()
+    {
+        for (int i = 0; i < displayedCards.Count; i++)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+            if (displayedCards[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100)) {
+                currentMoveOwner.hand[i].isSelected = !currentMoveOwner.hand[i].isSelected;
+                Debug.Log("Kiss me lips");
+            }
+        }
+    }
+
+    // Checks if the player pressed commit
+    void checkCommit()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
+        if (commitButton.GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
+        {
+            commitMove();
+        }
     }
     
     // Once all players have played their cards, this function will calculate the new current weather 
@@ -140,8 +206,7 @@ public class GameSystem : MonoBehaviour {
 
     // Once the new weather is calulated, this function will determine the effect on the town based on the
     // current weather and season.
-
-    private void determineDivineInterventionEffect() {
+    private void calculateDivineInterventionEffect() {
         
         if (currentWeather.Equals(neutral))
         {
@@ -150,8 +215,8 @@ public class GameSystem : MonoBehaviour {
 
         if (season.getAlwaysBadWeatherEffects().Contains(currentWeather))
         {
-            townHealth -= alwaysBadHealthEffect;
-            currentTurnOwner.adjustFavor(alwaysBadFavorEffect);
+            townHealth += alwaysBadHealthEffect;
+            currentMoveOwner.adjustFavor(alwaysBadFavorEffect);
         }
         
         else if (season.getSometimesGoodWeatherEffects().Contains(currentWeather))
@@ -161,8 +226,8 @@ public class GameSystem : MonoBehaviour {
 
         else
         {
-            townHealth -= sometimesBadHealthEffect;
-            currentTurnOwner.adjustFavor(sometimesBadFavorEffect);
+            townHealth += sometimesBadHealthEffect;
+            currentMoveOwner.adjustFavor(sometimesBadFavorEffect);
         }
     }
 
@@ -188,20 +253,10 @@ public class GameSystem : MonoBehaviour {
         return false;
     }
 
-    // generates a a list of players that does not include the current player.
-    private List<Player> generateListOfPlayersExcludingCurrentTurnOwner(int indexOfExcludedPlayer)
+    // Checks if the players have lost
+    private bool checkLose()
     {
-        List<Player> listOfPlayersExcludingCurrentTurnOwner = new List<Player>();
-        for (int i = indexOfExcludedPlayer + 1; i < players.Count; i++)
-        {
-            listOfPlayersExcludingCurrentTurnOwner.Add(players[i]);
-        }
-
-        for (int i = 0; i < indexOfExcludedPlayer; i++)
-        {
-            listOfPlayersExcludingCurrentTurnOwner.Add(players[i]);
-        }
-        return listOfPlayersExcludingCurrentTurnOwner;
+        return townHealth <= 0;
     }
 
     // All player's redraw cards
@@ -229,5 +284,13 @@ public class GameSystem : MonoBehaviour {
         Player tempCopyOfFirstPlayer = players[0];
         players.RemoveAt(0);
         players.Add(tempCopyOfFirstPlayer);
+    }
+
+    private void clearDisplayedCards()
+    {
+        foreach(GameObject cardObject in displayedCards)
+        {
+            Destroy(cardObject);
+        }
     }
 }
