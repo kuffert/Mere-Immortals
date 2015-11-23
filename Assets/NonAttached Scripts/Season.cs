@@ -8,6 +8,8 @@ public abstract class Season
     public static List<Vector2> alwaysBadWeatherEffects;
     public static List<Vector2> sometimesGoodWeatherEffects;
 
+	public string seasonName;
+
     public List<Vector2> getAlwaysBadWeatherEffects()
     {
         return alwaysBadWeatherEffects;
@@ -26,12 +28,14 @@ public abstract class Season
         alwaysBadWeatherEffects.Add(new Vector2(2, 2));
         alwaysBadWeatherEffects.Add(new Vector2(2, -2));
     }
+
 }
 
 public class Summer : Season
 {
     public Summer()
     {
+		seasonName = "Summer";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(1, 0));
         sometimesGoodWeatherEffects.Add(new Vector2(1, 1));
@@ -42,12 +46,14 @@ public class Summer : Season
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 1));
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 2));
     }
+
 }
 
 public class Fall : Season
 {
     public Fall()
     {
+		seasonName = "Fall";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
         sometimesGoodWeatherEffects.Add(new Vector2(1, 1));
@@ -58,12 +64,14 @@ public class Fall : Season
         sometimesGoodWeatherEffects.Add(new Vector2(1, -1));
         sometimesGoodWeatherEffects.Add(new Vector2(2, -1));
     }
+
 }
 
 public class Winter : Season
 {
     public Winter()
     {
+		seasonName = "Winter";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 0));
         sometimesGoodWeatherEffects.Add(new Vector2(-1, -1));
@@ -74,12 +82,14 @@ public class Winter : Season
         sometimesGoodWeatherEffects.Add(new Vector2(1, -1));
         sometimesGoodWeatherEffects.Add(new Vector2(1, -2));
     }
+
 }
 
 public class Spring : Season
 {
     public Spring()
     {
+		seasonName = "Spring";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 1));
@@ -90,4 +100,5 @@ public class Spring : Season
         sometimesGoodWeatherEffects.Add(new Vector2(-1, -1));
         sometimesGoodWeatherEffects.Add(new Vector2(-2, -1));
     }
+
 }
