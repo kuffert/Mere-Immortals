@@ -124,6 +124,7 @@ public class Player {
         return totalEffectOfPlayedCards;
     }
     
+    //a comment called fuckboy
     public void updateCardPositions(List<GameObject> cardObjects)
     {
         foreach (GameObject cardObject in cardObjects)
