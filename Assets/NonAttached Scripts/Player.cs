@@ -68,6 +68,24 @@ public class Player {
         return cardObjects;
     }
 
+	public List<GameObject> showPlayedCards()
+	{
+		List<GameObject> cardImages = new List<GameObject>();
+
+		for (int i = 0; i < playedCards.Count; i++)
+		{
+			GameObject cardImage = new GameObject();
+			cardImage.AddComponent<SpriteRenderer>();
+			cardImage.GetComponent<SpriteRenderer>().sprite = this.playedCards[i].backImage;
+			cardImages.Add(cardImage);
+
+			cardImage.transform.localScale = new Vector3(.25f, .25f, 0f);
+
+			cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i* (.6f / playedCards.Count)), 0f, 0f));
+		}
+		return cardImages;
+	}
+
     // @Matt this shit too
     public void wipePlayedCards()
     {

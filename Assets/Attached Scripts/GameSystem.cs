@@ -20,6 +20,7 @@ public class GameSystem : MonoBehaviour {
     public int numberOfCards;
     public TextMesh DebugText;
     public TextMesh commitButton;
+	public TextMesh weatherText;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
@@ -29,6 +30,8 @@ public class GameSystem : MonoBehaviour {
 
     // list of card gameobjects that updates during each players turn
     private List<GameObject> displayedCards;
+
+	private List<GameObject> displayedPlayedCards;
 
     // These are game-specific, but the rendering scripts will need access to these by using getters.
     private Vector2 currentWeather;
@@ -62,6 +65,7 @@ public class GameSystem : MonoBehaviour {
 
     void Start() {
         season = new Summer();
+		weatherText.text = season.seasonName;
         currentWeather = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
 
@@ -93,6 +97,7 @@ public class GameSystem : MonoBehaviour {
 
         // Update card positions
         currentMoveOwner.updateCardPositions(displayedCards);
+
 
         // Check for cards being clicked
         if (Input.GetMouseButtonDown(0))
@@ -137,13 +142,15 @@ public class GameSystem : MonoBehaviour {
         if (turnsPlayed == numberOfPlayers)
         {
             turnsPlayed = 0;
-            //changeSeason();
+            changeSeason();
             wipeAllPlayedCards();
             allPlayersRedraw();
         }
         
         clearDisplayedCards();
         displayedCards = currentMoveOwner.showCards();
+		displayedPlayedCards = currentMoveOwner.showPlayedCards();
+		//currentMoveOwner.updateCardPositions(displayedPlayedCards);
         Debug.Log("Current move owner: " + currentMoveOwner + " | moves played: " + movesPlayed + " | turns played " + turnsPlayed);
     }
 
@@ -173,6 +180,28 @@ public class GameSystem : MonoBehaviour {
             commitMove();
         }
     }
+
+	public void changeSeason()
+	{
+		if (season.seasonName == "Summer")
+		{
+			season = new Fall();
+		}
+		else if (season.seasonName == "Fall")
+		{
+			season = new Winter();
+		}
+		else if (season.seasonName == "Winter")
+		{
+			season = new Spring();
+		}
+		else if (season.seasonName == "Spring")
+		{
+			season = new Summer();
+		}
+		weatherText.text = season.seasonName;
+		Debug.Log("Season changed to "+ season.seasonName);
+	}
     
     // Once all players have played their cards, this function will calculate the new current weather 
     // based off of the cards the player's played.
