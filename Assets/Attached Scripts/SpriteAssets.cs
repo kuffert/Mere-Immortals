@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class CardAssets : MonoBehaviour {
-    public static CardAssets cardAssets;
+public class SpriteAssets : MonoBehaviour {
+    public static SpriteAssets spriteAssets;
     public Sprite hot;
     public Sprite cold;
     public Sprite humid;
@@ -13,21 +13,26 @@ public class CardAssets : MonoBehaviour {
     public Sprite cardArtemis;
     public Sprite cardAthena;
 
+    public Sprite summer;
+    public Sprite winter;
+    public Sprite fall;
+    public Sprite spring;
+
     public List<Sprite> allCardbacks;
 
     void Awake()
     {
-        if (cardAssets == null)
+        if (spriteAssets == null)
         {
             DontDestroyOnLoad(gameObject);
-            cardAssets = this;
+            spriteAssets = this;
             allCardbacks = new List<Sprite>();
             allCardbacks.Add(cardAppollo);
             allCardbacks.Add(cardAphorodite);
             allCardbacks.Add(cardArtemis);
             allCardbacks.Add(cardAthena);
         }
-        else if (cardAssets != this)
+        else if (spriteAssets != this)
         {
             Destroy(gameObject);
         }

@@ -7,7 +7,7 @@ public abstract class Season
 {
     public static List<Vector2> alwaysBadWeatherEffects;
     public static List<Vector2> sometimesGoodWeatherEffects;
-
+    public Sprite seasonSprite;
 	public string seasonName;
 
     public List<Vector2> getAlwaysBadWeatherEffects()
@@ -35,6 +35,7 @@ public class Summer : Season
 {
     public Summer()
     {
+        seasonSprite = SpriteAssets.spriteAssets.summer;
 		seasonName = "Summer";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(1, 0));
@@ -53,7 +54,8 @@ public class Fall : Season
 {
     public Fall()
     {
-		seasonName = "Fall";
+        seasonSprite = SpriteAssets.spriteAssets.fall;
+        seasonName = "Fall";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
         sometimesGoodWeatherEffects.Add(new Vector2(1, 1));
@@ -71,7 +73,8 @@ public class Winter : Season
 {
     public Winter()
     {
-		seasonName = "Winter";
+        seasonSprite = SpriteAssets.spriteAssets.winter;
+        seasonName = "Winter";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 0));
         sometimesGoodWeatherEffects.Add(new Vector2(-1, -1));
@@ -89,7 +92,8 @@ public class Spring : Season
 {
     public Spring()
     {
-		seasonName = "Spring";
+        seasonSprite = SpriteAssets.spriteAssets.spring;
+        seasonName = "Spring";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 1));

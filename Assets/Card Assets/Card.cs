@@ -7,8 +7,8 @@ public abstract class Card {
 	public Sprite backImage;
     public bool isSelected;
 	
-	public Sprite hot = CardAssets.cardAssets.hot;
-	public Sprite dry = CardAssets.cardAssets.dry;
-    public Sprite cold = CardAssets.cardAssets.cold;
-    public Sprite humid = CardAssets.cardAssets.humid;
+	public Sprite hot = SpriteAssets.spriteAssets.hot;
+	public Sprite dry = SpriteAssets.spriteAssets.dry;
+    public Sprite cold = SpriteAssets.spriteAssets.cold;
+    public Sprite humid = SpriteAssets.spriteAssets.humid;
 }

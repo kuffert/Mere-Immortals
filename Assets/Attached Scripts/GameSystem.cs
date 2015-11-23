@@ -20,7 +20,7 @@ public class GameSystem : MonoBehaviour {
     public int numberOfCards;
     public TextMesh DebugText;
     public TextMesh commitButton;
-	public TextMesh weatherText;
+	public GameObject weatherSprite;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
@@ -65,12 +65,12 @@ public class GameSystem : MonoBehaviour {
 
     void Start() {
         season = new Summer();
-		weatherText.text = season.seasonName;
+        weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
         currentWeather = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            players.Add(new Player("Player " + (i + 1), CardAssets.cardAssets.allCardbacks[i], startingFavor));
+            players.Add(new Player("Player " + (i + 1), SpriteAssets.spriteAssets.allCardbacks[i], startingFavor));
         }
 
         DebugText.text = currentWeather.x + ", " + currentWeather.y;
@@ -199,7 +199,7 @@ public class GameSystem : MonoBehaviour {
 		{
 			season = new Summer();
 		}
-		weatherText.text = season.seasonName;
+		weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
     
