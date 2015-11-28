@@ -41,6 +41,7 @@ public class Weather : MonoBehaviour {
     public Sprite noWeatherFoundSprite;
 
     private Hashtable weatherVectorSpritePairs;
+	private Hashtable weatherVectorStringPairs;
 
     void Awake() 
     {
@@ -87,6 +88,38 @@ public class Weather : MonoBehaviour {
         weatherVectorSpritePairs.Add(new Vector2(-0, -2), freezing);
         weatherVectorSpritePairs.Add(new Vector2(1, -2), frozen);
         weatherVectorSpritePairs.Add(new Vector2(2, -2), iceStorm);
+
+		weatherVectorStringPairs = new Hashtable();
+		
+		weatherVectorStringPairs.Add(new Vector2(-2, 2), "Acid Rain");
+		weatherVectorStringPairs.Add(new Vector2(-1, 2), "Heavy Mist");
+		weatherVectorStringPairs.Add(new Vector2(0, 2), "Scorching");
+		weatherVectorStringPairs.Add(new Vector2(1, 2), "Drought");
+		weatherVectorStringPairs.Add(new Vector2(2, 2), "Sandstorm");
+		
+		weatherVectorStringPairs.Add(new Vector2(-2, 1), "Hurricane");
+		weatherVectorStringPairs.Add(new Vector2(-1, 1), "Warm Rain");
+		weatherVectorStringPairs.Add(new Vector2(0, 1), "Warm");
+		weatherVectorStringPairs.Add(new Vector2(1, 1), "Heat Wave");
+		weatherVectorStringPairs.Add(new Vector2(2, 1), "Arid");
+		
+		weatherVectorStringPairs.Add(new Vector2(-2, 0), "Downpour");
+		weatherVectorStringPairs.Add(new Vector2(-1, 0), "Rain");
+		weatherVectorStringPairs.Add(new Vector2(0, 0), "Neutral");
+		weatherVectorStringPairs.Add(new Vector2(1, 0), "Dry");
+		weatherVectorStringPairs.Add(new Vector2(2, 0), "Desert");
+		
+		weatherVectorStringPairs.Add(new Vector2(-2, -1), "Hail");
+		weatherVectorStringPairs.Add(new Vector2(-1, -1), "Snow");
+		weatherVectorStringPairs.Add(new Vector2(0, -1), "Cooler");
+		weatherVectorStringPairs.Add(new Vector2(1, -1), "Frosting");
+		weatherVectorStringPairs.Add(new Vector2(2, -1), "Icing");
+		
+		weatherVectorStringPairs.Add(new Vector2(-2, -2), "Blizzard");
+		weatherVectorStringPairs.Add(new Vector2(-1, -2), "Snow Storm");
+		weatherVectorStringPairs.Add(new Vector2(-0, -2), "Freezing");
+		weatherVectorStringPairs.Add(new Vector2(1, -2), "Frozen");
+		weatherVectorStringPairs.Add(new Vector2(2, -2), "Ice Storm");
     }
 
 
@@ -100,6 +133,17 @@ public class Weather : MonoBehaviour {
             Debug.Log("No Weather found for weather vector: " + weatherVector);
             return noWeatherFoundSprite;
     }
+
+	public string findStringByWeatherVector(Vector2 weatherVector)
+	{
+		if (weatherVectorStringPairs.ContainsKey(weatherVector))
+		{
+			return (string)weatherVectorStringPairs[weatherVector];
+		}
+		else
+			Debug.Log("No Weather found for weather vector: " + weatherVector);
+		return "Sorry no pizza for you";
+	}
 }
 
 

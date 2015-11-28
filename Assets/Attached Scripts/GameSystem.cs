@@ -34,7 +34,7 @@ public class GameSystem : MonoBehaviour {
 	private List<GameObject> displayedPlayedCards;
 
     // These are game-specific, but the rendering scripts will need access to these by using getters.
-    private Vector2 currentWeather;
+    private Vector2 currentWeatherVector;
     private Sprite currentWeatherSprite;
     private Player currentMoveOwner;
 
@@ -46,7 +46,7 @@ public class GameSystem : MonoBehaviour {
     // These are private and only exist for code redability
     private Vector2 neutral = new Vector2(0, 0);
 
-    public Vector2 getCurrentWeather() { return currentWeather; }
+    public Vector2 getCurrentWeather() { return currentWeatherVector; }
     public Sprite getCurrentWeatherSprite() { return currentWeatherSprite; }
     public Player getCurrentMoveOwner() { return currentMoveOwner; }
     
@@ -66,14 +66,14 @@ public class GameSystem : MonoBehaviour {
     void Start() {
         season = new Summer();
         weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
-        currentWeather = new Vector2(0, 0);
-        currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
+        currentWeatherVector = new Vector2(0, 0);
+        currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
         for (int i = 0; i < numberOfPlayers; i++) {
             players.Add(new Player("Player " + (i + 1), SpriteAssets.spriteAssets.allCardbacks[i], startingFavor));
         }
 
-        DebugText.text = currentWeather.x + ", " + currentWeather.y;
+        DebugText.text = currentWeatherVector.x + ", " + currentWeatherVector.y;
         currentMoveOwner = players[0];
         displayedCards = players[0].showCards();
     }
@@ -93,7 +93,7 @@ public class GameSystem : MonoBehaviour {
         }
 
         // Show the current weather vector
-        DebugText.text = "(" + currentWeather.x + ", " + currentWeather.y + ") (" + currentMoveOwner.characterName + ") (" + currentMoveOwner.favor + " favor" + ") (" + townHealth + " Town Health)";
+        DebugText.text = Weather.weather.findStringByWeatherVector(currentWeatherVector) + "\n" + "(" + currentMoveOwner.characterName + ") (" + currentMoveOwner.favor + " favor" + ") (" + townHealth + " Town Health)";
 
         // Update card positions
         currentMoveOwner.updateCardPositions(displayedCards);
@@ -199,6 +199,9 @@ public class GameSystem : MonoBehaviour {
 		{
 			season = new Summer();
 		}
+
+		// Update the season background here
+
 		weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
@@ -213,8 +216,8 @@ public class GameSystem : MonoBehaviour {
             cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
         }
 
-        currentWeather = trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards);
-        currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeather);
+        currentWeatherVector = trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards);
+        currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
     }
 
     // Trims a given vector down to size so that it fits correctly in the weather grid.
@@ -237,18 +240,18 @@ public class GameSystem : MonoBehaviour {
     // current weather and season.
     private void calculateDivineInterventionEffect() {
         
-        if (currentWeather.Equals(neutral))
+        if (currentWeatherVector.Equals(neutral))
         {
-            return;
+            return; // ???
         }
 
-        if (season.getAlwaysBadWeatherEffects().Contains(currentWeather))
+        if (season.getAlwaysBadWeatherEffects().Contains(currentWeatherVector))
         {
             townHealth += alwaysBadHealthEffect;
             currentMoveOwner.adjustFavor(alwaysBadFavorEffect);
         }
         
-        else if (season.getSometimesGoodWeatherEffects().Contains(currentWeather))
+        else if (season.getSometimesGoodWeatherEffects().Contains(currentWeatherVector))
         {
             adjustAllPlayersFavor(someTimesGoodFavorEffect);
         }
