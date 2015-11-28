@@ -21,10 +21,12 @@ public class GameSystem : MonoBehaviour {
     public TextMesh DebugText;
     public TextMesh commitButton;
 	public GameObject weatherSprite;
+	public GameObject weatherTableSprite;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
 	private List<Player> players = new List<Player>();
+
 
     // These are the card back images 
 
@@ -65,7 +67,8 @@ public class GameSystem : MonoBehaviour {
 
     void Start() {
         season = new Summer();
-        weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
+        weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
+		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
         currentWeatherVector = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
@@ -200,9 +203,8 @@ public class GameSystem : MonoBehaviour {
 			season = new Summer();
 		}
 
-		// Update the season background here
-
-		weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonSprite;
+		weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
+		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
     

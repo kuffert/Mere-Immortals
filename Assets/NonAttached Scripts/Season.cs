@@ -7,7 +7,8 @@ public abstract class Season
 {
     public static List<Vector2> alwaysBadWeatherEffects;
     public static List<Vector2> sometimesGoodWeatherEffects;
-    public Sprite seasonSprite;
+    public Sprite seasonButtonSprite;
+	public Sprite seasonWeatherTable;
 	public string seasonName;
 
     public List<Vector2> getAlwaysBadWeatherEffects()
@@ -35,7 +36,8 @@ public class Summer : Season
 {
     public Summer()
     {
-        seasonSprite = SpriteAssets.spriteAssets.summer;
+        seasonButtonSprite = SpriteAssets.spriteAssets.summerButton;
+		seasonWeatherTable = SpriteAssets.spriteAssets.summerWeatherTable;
 		seasonName = "Summer";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(1, 0));
@@ -54,7 +56,8 @@ public class Fall : Season
 {
     public Fall()
     {
-        seasonSprite = SpriteAssets.spriteAssets.fall;
+        seasonButtonSprite = SpriteAssets.spriteAssets.fallButton;
+		seasonWeatherTable = SpriteAssets.spriteAssets.fallWeatherTable;
         seasonName = "Fall";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
@@ -73,7 +76,8 @@ public class Winter : Season
 {
     public Winter()
     {
-        seasonSprite = SpriteAssets.spriteAssets.winter;
+        seasonButtonSprite = SpriteAssets.spriteAssets.winterButton;
+		seasonWeatherTable = SpriteAssets.spriteAssets.winterWeatherTable;
         seasonName = "Winter";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 0));
@@ -92,7 +96,8 @@ public class Spring : Season
 {
     public Spring()
     {
-        seasonSprite = SpriteAssets.spriteAssets.spring;
+        seasonButtonSprite = SpriteAssets.spriteAssets.springButton;
+		seasonWeatherTable = SpriteAssets.spriteAssets.springWeatherTable;
         seasonName = "Spring";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));

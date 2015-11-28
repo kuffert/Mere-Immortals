@@ -13,10 +13,15 @@ public class SpriteAssets : MonoBehaviour {
     public Sprite cardArtemis;
     public Sprite cardAthena;
 
-    public Sprite summer;
-    public Sprite winter;
-    public Sprite fall;
-    public Sprite spring;
+    public Sprite summerButton;
+    public Sprite winterButton;
+    public Sprite fallButton;
+    public Sprite springButton;
+
+	public Sprite summerWeatherTable;
+	public Sprite winterWeatherTable;
+	public Sprite fallWeatherTable;
+	public Sprite springWeatherTable;
 
     public List<Sprite> allCardbacks;
 
