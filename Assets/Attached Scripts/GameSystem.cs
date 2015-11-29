@@ -22,6 +22,7 @@ public class GameSystem : MonoBehaviour {
     public TextMesh commitButton;
 	public GameObject weatherSprite;
 	public GameObject weatherTableSprite;
+	public GameObject weatherMarker;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
@@ -72,6 +73,8 @@ public class GameSystem : MonoBehaviour {
         currentWeatherVector = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
+		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 4;
+
         for (int i = 0; i < numberOfPlayers; i++) {
             players.Add(new Player("Player " + (i + 1), SpriteAssets.spriteAssets.allCardbacks[i], startingFavor));
         }
@@ -109,7 +112,9 @@ public class GameSystem : MonoBehaviour {
             checkCommit();
         }
     }
-    
+    void resetWeatherMarker() {
+		weatherMarker.transform.position = new Vector2 ((float)-.21 + (float)(currentWeatherVector.x * 1.71), (float).79 + (float)(currentWeatherVector.y * 1.28));
+	}
     // Happens when a player commits his cards. Changes the current player to the
     // next player, commits their cards, increments the number of people that have played,
     // and changes the card objects being shown in the game world.
@@ -117,16 +122,22 @@ public class GameSystem : MonoBehaviour {
     void commitMove()
     { 
         currentMoveOwner.commitCards();
-
+		//place weather marker back to current weather position
+		resetWeatherMarker ();
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
 
         // If all players have played, enact divine intervention
+		if (movesPlayed == numberOfPlayers - 1) {
+			calculateNewCurrentWeather();
+			resetWeatherMarker ();
+		}
         if (movesPlayed == numberOfPlayers)
         {
             movesPlayed = 0;
             turnsPlayed++;
             calculateNewCurrentWeather();
+			resetWeatherMarker ();
             calculateDivineInterventionEffect();
             // Current turn owner should not change.
         }
@@ -168,10 +179,19 @@ public class GameSystem : MonoBehaviour {
             if (displayedCards[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100)) {
                 currentMoveOwner.hand[i].isSelected = !currentMoveOwner.hand[i].isSelected;
                 Debug.Log("Kiss me lips");
+				//move the weather marker
+				moveWeatherMarker(currentMoveOwner.hand[i], currentMoveOwner.hand[i].isSelected);
             }
         }
     }
-
+	//moves the weather marker when player selects or deselects a card in hand
+	void moveWeatherMarker (Card c ,bool selected){
+		if (selected) {
+			weatherMarker.transform.Translate ((float)(c.effect.x * 1.71), (float)(c.effect.y * 1.28), 0);
+		} else {
+			weatherMarker.transform.Translate ((float)(c.effect.x * -1.71), (float)(c.effect.y * -1.28), 0);
+		}
+	}
     // Checks if the player pressed commit
     void checkCommit()
     {
