@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 
 // Chris Kuffert 11/12/15
@@ -18,7 +19,11 @@ public class GameSystem : MonoBehaviour {
     public int startingFavor;
     public int favorToWin;
     public int numberOfCards;
-    public TextMesh DebugText;
+    public TextMesh playerDebugText;
+	public TextMesh favorDebugText;
+	public TextMesh weatherDebugText;
+	public TextMesh healthDebugText;
+	public TextMesh notifyPlayerDebugText;
     public TextMesh commitButton;
 	public GameObject weatherSprite;
 	public GameObject weatherTableSprite;
@@ -74,12 +79,16 @@ public class GameSystem : MonoBehaviour {
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
 		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 4;
-
+		playerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
+		favorDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
+		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
+		healthDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
+		notifyPlayerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
         for (int i = 0; i < numberOfPlayers; i++) {
             players.Add(new Player("Player " + (i + 1), SpriteAssets.spriteAssets.allCardbacks[i], startingFavor));
         }
 
-        DebugText.text = currentWeatherVector.x + ", " + currentWeatherVector.y;
+        playerDebugText.text = currentWeatherVector.x + ", " + currentWeatherVector.y;
         currentMoveOwner = players[0];
         displayedCards = players[0].showCards();
     }
@@ -99,8 +108,10 @@ public class GameSystem : MonoBehaviour {
         }
 
         // Show the current weather vector
-        DebugText.text = Weather.weather.findStringByWeatherVector(currentWeatherVector) + "\n" + "(" + currentMoveOwner.characterName + ") (" + currentMoveOwner.favor + " favor" + ") (" + townHealth + " Town Health)";
-
+		playerDebugText.text = "Player: " + currentMoveOwner.characterName;
+		favorDebugText.text = "Favor: " + currentMoveOwner.favor;
+		weatherDebugText.text = Weather.weather.findStringByWeatherVector (currentWeatherVector);
+		healthDebugText.text = "Town Health: " + townHealth;
         // Update card positions
         currentMoveOwner.updateCardPositions(displayedCards);
 
@@ -112,6 +123,7 @@ public class GameSystem : MonoBehaviour {
             checkCommit();
         }
     }
+	//put the weather marker at the location of currentWeatherVector
     void resetWeatherMarker() {
 		weatherMarker.transform.position = new Vector2 ((float)-.21 + (float)(currentWeatherVector.x * 1.71), (float).79 + (float)(currentWeatherVector.y * 1.28));
 	}
@@ -121,17 +133,20 @@ public class GameSystem : MonoBehaviour {
     // If the max number of players have played, The season will change,  
     void commitMove()
     { 
+		notifyPlayerDebugText.text = "";
         currentMoveOwner.commitCards();
 		//place weather marker back to current weather position
 		resetWeatherMarker ();
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
 
-        // If all players have played, enact divine intervention
+        //last player in the round, gets to save the day!
 		if (movesPlayed == numberOfPlayers - 1) {
 			calculateNewCurrentWeather();
 			resetWeatherMarker ();
+			notifyPlayerDebugText.text = "Divine Intervention!!";
 		}
+		// If all players have played, enact divine intervention
         if (movesPlayed == numberOfPlayers)
         {
             movesPlayed = 0;
