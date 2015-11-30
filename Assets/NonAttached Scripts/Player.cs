@@ -17,7 +17,6 @@ public class Player {
     {
         this.characterName = characterName;
         this.favor = startingFavor;
-        this.cardBack = cardBack;
         drawCards();
         gapBetweenCards = .6f / hand.Count;
     }
@@ -25,7 +24,7 @@ public class Player {
 	//one more card in your hand than the number of players
 	public void drawCards(){
 		int cardType;
-		while (this.hand.Count <= GameSystem.gameSystem.numberOfPlayers) {
+		while (this.hand.Count <= GameInfo.gameInfo.numberOfPlayers) {
 
 			//0=hot 1=dry 2=cold 3=humid
 			cardType = Random.Range (0,4);

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a8378cc6cd547d44c84cd4d4039933ca
-timeCreated: 1447978005
+timeCreated: 1448838835
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -9,6 +9,26 @@ MonoImporter:
   - cold: {fileID: 21300000, guid: e56007628781ea64185f2e81cc3b9e24, type: 3}
   - humid: {fileID: 21300000, guid: ba3c9e0c81d5c8147b51b8469640a0d7, type: 3}
   - dry: {fileID: 21300000, guid: 9cffe507cd45591499f30b0bbfd79c4d, type: 3}
+  - cardAppollo: {fileID: 21300000, guid: 909408793608b064cb97caef6edf201c, type: 3}
+  - cardAphorodite: {fileID: 21300000, guid: d307bed02db721645b4d1c605bccb4ae, type: 3}
+  - cardArtemis: {fileID: 21300000, guid: 04b43265ed558d4408556da001805751, type: 3}
+  - cardAthena: {fileID: 21300000, guid: d930b3d06759d5746b858ba386b16351, type: 3}
+  - cardPoseidon: {fileID: 21300000, guid: 7b403e8887fe9984ab84a62f1ad22b7d, type: 3}
+  - cardHades: {fileID: 21300000, guid: 9709a44531dd84d489b8392448a18f12, type: 3}
+  - summerButton: {fileID: 21300000, guid: a71aa163f13187a49953f5139641a119, type: 3}
+  - winterButton: {fileID: 21300000, guid: 2c7f73415b7a7e84f82b61dacffdc2de, type: 3}
+  - fallButton: {fileID: 21300000, guid: df89c35b7f07d9844bc39df50e2b4b54, type: 3}
+  - springButton: {fileID: 21300000, guid: 05a3c14903ac83d448cad9c06c9d82d4, type: 3}
+  - summerWeatherTable: {fileID: 21300000, guid: fc9b69e700b504eef8069d8b5a0bd07a,
+      type: 3}
+  - winterWeatherTable: {fileID: 21300000, guid: fc9b69e700b504eef8069d8b5a0bd07a,
+      type: 3}
+  - fallWeatherTable: {fileID: 21300000, guid: 1a8671de5795a44908e1fc8dd4fdc6fe, type: 3}
+  - springWeatherTable: {fileID: 21300000, guid: cf261b7b10c2d4ce99770a0fc9cb669e,
+      type: 3}
+  - fourPlayerButton: {fileID: 21300000, guid: 93d963318e9729a439d9d0a957f67330, type: 3}
+  - fivePlayerButton: {fileID: 21300000, guid: fa9c029ab1522f645ab2f1706e6cd1a6, type: 3}
+  - sixPlayerButton: {fileID: 21300000, guid: 6c87b9ec8b1949a4782fae070c1d9cb0, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

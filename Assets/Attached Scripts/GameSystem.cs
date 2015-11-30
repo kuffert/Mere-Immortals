@@ -26,7 +26,7 @@ public class GameSystem : MonoBehaviour {
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
-	private List<Player> players = new List<Player>();
+    public List<Player> players;
 
 
     // These are the card back images 
@@ -75,9 +75,8 @@ public class GameSystem : MonoBehaviour {
 
 		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 4;
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            players.Add(new Player("Player " + (i + 1), SpriteAssets.spriteAssets.allCardbacks[i], startingFavor));
-        }
+        players = GameInfo.gameInfo.players;
+        numberOfPlayers = GameInfo.gameInfo.numberOfPlayers;
 
         DebugText.text = currentWeatherVector.x + ", " + currentWeatherVector.y;
         currentMoveOwner = players[0];
@@ -88,13 +87,13 @@ public class GameSystem : MonoBehaviour {
 
         if (checkLose())
         {
-            Debug.Log("Sweet scrotum boi");
+            Debug.Log("Game Over");
             Application.Quit();
         }
 
         if (checkWin())
         {
-            Debug.Log("Suck me off");
+            Debug.Log("Winner!");
             Application.Quit();
         }
 

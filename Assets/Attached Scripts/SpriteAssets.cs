@@ -12,6 +12,8 @@ public class SpriteAssets : MonoBehaviour {
     public Sprite cardAphorodite;
     public Sprite cardArtemis;
     public Sprite cardAthena;
+    public Sprite cardPoseidon;
+    public Sprite cardHades;
 
     public Sprite summerButton;
     public Sprite winterButton;
@@ -22,6 +24,11 @@ public class SpriteAssets : MonoBehaviour {
 	public Sprite winterWeatherTable;
 	public Sprite fallWeatherTable;
 	public Sprite springWeatherTable;
+
+    public Sprite threePlayerButton;
+    public Sprite fourPlayerButton;
+    public Sprite fivePlayerButton;
+    public Sprite sixPlayerButton;
 
     public List<Sprite> allCardbacks;
 
@@ -36,6 +43,8 @@ public class SpriteAssets : MonoBehaviour {
             allCardbacks.Add(cardAphorodite);
             allCardbacks.Add(cardArtemis);
             allCardbacks.Add(cardAthena);
+            allCardbacks.Add(cardPoseidon);
+            allCardbacks.Add(cardHades);
         }
         else if (spriteAssets != this)
         {
