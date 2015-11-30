@@ -136,6 +136,7 @@ public class GameSystem : MonoBehaviour {
         currentMoveOwner.commitCards();
 		//place weather marker back to current weather position
 		resetWeatherMarker ();
+
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
 
@@ -177,8 +178,6 @@ public class GameSystem : MonoBehaviour {
         
         clearDisplayedCards();
         displayedCards = currentMoveOwner.showCards();
-		displayedPlayedCards = currentMoveOwner.showPlayedCards();
-		//currentMoveOwner.updateCardPositions(displayedPlayedCards);
         Debug.Log("Current move owner: " + currentMoveOwner + " | moves played: " + movesPlayed + " | turns played " + turnsPlayed);
     }
 
