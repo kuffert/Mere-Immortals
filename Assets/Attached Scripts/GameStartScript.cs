@@ -148,7 +148,6 @@ public class GameStartScript : MonoBehaviour {
                 if (availableCardBacksGameObjects[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
                 {
                     numberOfPlayersChosen += 1;
-                    Debug.Log("Player " + numberOfPlayersChosen);
                     Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardBacks[i], 3);
                     availableCardBacks.RemoveAt(i);
                     players.Add(newPlayer);
