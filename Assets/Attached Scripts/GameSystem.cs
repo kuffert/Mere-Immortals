@@ -40,6 +40,8 @@ public class GameSystem : MonoBehaviour {
     private List<GameObject> displayedCards;
 	private List<GameObject> displayedPlayedCards;
 
+    private List<GameObject> cardsToWipe;
+
     // These are game-specific, but the rendering scripts will need access to these by using getters.
     private Vector2 currentWeatherVector;
     private Sprite currentWeatherSprite;
@@ -62,6 +64,7 @@ public class GameSystem : MonoBehaviour {
         if (gameSystem == null)
         {
             DontDestroyOnLoad(gameObject);
+            displayedPlayedCards = new List<GameObject>();
             gameSystem = this;
         }
         else if (gameSystem != this)
@@ -79,6 +82,7 @@ public class GameSystem : MonoBehaviour {
 
 		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 4;
         players = GameInfo.gameInfo.players;
+        Debug.Log(players[0].cardBack);
         numberOfPlayers = GameInfo.gameInfo.numberOfPlayers;
 
 		playerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
@@ -134,8 +138,9 @@ public class GameSystem : MonoBehaviour {
     { 
 		notifyPlayerDebugText.text = "";
         currentMoveOwner.commitCards();
-		//place weather marker back to current weather position
-		resetWeatherMarker ();
+        currentMoveOwner.showPlayedCards(displayedPlayedCards, players.IndexOf(currentMoveOwner));
+        //place weather marker back to current weather position
+        resetWeatherMarker();
 
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
@@ -145,7 +150,8 @@ public class GameSystem : MonoBehaviour {
 			calculateNewCurrentWeather();
 			resetWeatherMarker ();
 			notifyPlayerDebugText.text = "Divine Intervention!!";
-		}
+        }
+
 		// If all players have played, enact divine intervention
         if (movesPlayed == numberOfPlayers)
         {
@@ -154,6 +160,9 @@ public class GameSystem : MonoBehaviour {
             calculateNewCurrentWeather();
 			resetWeatherMarker ();
             calculateDivineInterventionEffect();
+            clearDisplayedCards(displayedPlayedCards);
+            wipeMeUp();
+
             // Current turn owner should not change.
         }
         // Otherwise move the current player to the next index, looping around if needed.
@@ -176,9 +185,8 @@ public class GameSystem : MonoBehaviour {
             allPlayersRedraw();
         }
         
-        clearDisplayedCards();
+        clearDisplayedCards(displayedCards);
         displayedCards = currentMoveOwner.showCards();
-        Debug.Log("Current move owner: " + currentMoveOwner + " | moves played: " + movesPlayed + " | turns played " + turnsPlayed);
     }
 
     // Checks to see if, upon a click, the click should move a card.
@@ -353,11 +361,19 @@ public class GameSystem : MonoBehaviour {
         players.Add(tempCopyOfFirstPlayer);
     }
 
-    private void clearDisplayedCards()
+    private void clearDisplayedCards(List<GameObject> cardList)
     {
-        foreach(GameObject cardObject in displayedCards)
+        foreach(GameObject cardObject in cardList)
         {
             Destroy(cardObject);
+        }
+    }
+
+    private void wipeMeUp()
+    {
+        foreach (Player player in players)
+        {
+            player.wipePlayedCards();
         }
     }
 }

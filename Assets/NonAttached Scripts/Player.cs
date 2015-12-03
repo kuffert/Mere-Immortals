@@ -12,11 +12,13 @@ public class Player {
 
     private float gapBetweenCards;
     private float sideBuffer = .2f;
-    
+    private float rightSide = .8f;
+
     public Player(string characterName, Sprite cardBack, int startingFavor)
     {
         this.characterName = characterName;
         this.favor = startingFavor;
+        this.cardBack = cardBack;
         drawCards();
         gapBetweenCards = .6f / hand.Count;
     }
@@ -67,23 +69,24 @@ public class Player {
         return cardObjects;
     }
 
-	public List<GameObject> showPlayedCards()
-	{
-		List<GameObject> cardImages = new List<GameObject>();
+    public void showPlayedCards(List<GameObject> cardImages, int index)
+    {
+        float math;
+        math = index + 1;
+        math /= 10;
+        float yOffset = .9f - math;
 
-		for (int i = 0; i < playedCards.Count; i++)
-		{
-			GameObject cardImage = new GameObject();
-			cardImage.AddComponent<SpriteRenderer>();
-			cardImage.GetComponent<SpriteRenderer>().sprite = this.playedCards[i].backImage;
-			cardImages.Add(cardImage);
-
-			cardImage.transform.localScale = new Vector3(.25f, .25f, 0f);
-
-			cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i* (.6f / playedCards.Count)), 0f, 0f));
-		}
-		return cardImages;
-	}
+        for (int i = 0; i < playedCards.Count; i++)
+        {
+            GameObject cardImage = new GameObject();
+            cardImage.AddComponent<SpriteRenderer>();
+            cardImage.GetComponent<SpriteRenderer>().sprite = this.cardBack;
+            cardImage.transform.localScale = new Vector3(.25f, .25f, 0f);
+            cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(rightSide + (i * (.1f / playedCards.Count)), yOffset, 10f));
+            cardImages.Add(cardImage);
+        }
+        //return cardImages;
+    }
 
     // @Matt this shit too
     public void wipePlayedCards()
@@ -129,7 +132,8 @@ public class Player {
         foreach (GameObject cardObject in cardObjects)
         {
             int i = cardObjects.IndexOf(cardObject);
-            if (hand[cardObjects.IndexOf(cardObject)].isSelected)
+            Debug.Log(i);
+            if (hand[i].isSelected)
             {
                 cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i * gapBetweenCards), .3f, 10f));
             }

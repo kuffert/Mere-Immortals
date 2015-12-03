@@ -45,6 +45,7 @@ public class SpriteAssets : MonoBehaviour {
             allCardbacks.Add(cardAthena);
             allCardbacks.Add(cardPoseidon);
             allCardbacks.Add(cardHades);
+
         }
         else if (spriteAssets != this)
         {

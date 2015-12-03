@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 
 public class GameStartScript : MonoBehaviour {
-
-    List<Sprite> availableCardBacks;
+    
     List<Player> players;
 
     List<GameObject> numberOfPlayersGameObjects;
     List<GameObject> availableCardBacksGameObjects;
+
+    public List<Sprite> chosenCardBacks;
+    public List<Sprite> availableCardbacks;
 
     public GameObject infoText;
     public GameObject startText;
@@ -28,7 +30,7 @@ public class GameStartScript : MonoBehaviour {
         players = new List<Player>();
         numberOfPlayers = 0;
         numberOfPlayersChosen = 0;
-        availableCardBacks = SpriteAssets.spriteAssets.allCardbacks;
+        availableCardbacks = SpriteAssets.spriteAssets.allCardbacks;
         startGamePhase = false;
         selectNumberOfPlayersPhase = true;
 	}
@@ -121,7 +123,7 @@ public class GameStartScript : MonoBehaviour {
         float objectXLoc = .25f;
         int currentCardIndex = 0;
 
-        foreach(Sprite cardBack in availableCardBacks)
+        foreach(Sprite cardBack in availableCardbacks)
         {
             GameObject cardObject = new GameObject();
             cardObject.AddComponent<SpriteRenderer>();
@@ -148,9 +150,11 @@ public class GameStartScript : MonoBehaviour {
                 if (availableCardBacksGameObjects[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
                 {
                     numberOfPlayersChosen += 1;
-                    Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardBacks[i], 3);
-                    availableCardBacks.RemoveAt(i);
+                    Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardbacks[i], 3);
+                    chosenCardBacks.Add(availableCardbacks[i]);
+                    availableCardbacks.RemoveAt(i);
                     players.Add(newPlayer);
+                    Debug.Log(newPlayer.cardBack);
                     destroyAllButtons(availableCardBacksGameObjects);
                     availableCardBacksGameObjects.Clear();
 
