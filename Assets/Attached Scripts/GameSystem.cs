@@ -268,7 +268,7 @@ public class GameSystem : MonoBehaviour {
         {
             cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
         }
-        return cummulativeTotalOfPlayedCards + currentWeatherVector;
+        return trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards + currentWeatherVector);
     }
     
     // Once all players have played their cards, this function will calculate the new current weather 
@@ -281,14 +281,13 @@ public class GameSystem : MonoBehaviour {
             cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
         }
 
-        currentWeatherVector = trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards);
+		currentWeatherVector =  trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards +currentWeatherVector);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
     }
 
     // Trims a given vector down to size so that it fits correctly in the weather grid.
     private Vector2 trimCummulativeVectorToWeatherGrid(Vector2 vectorToBeTrimmed)
     {
-        vectorToBeTrimmed += currentWeatherVector;
         int xMax = 2;
         int yMax = 2;
         int xMin = -2;
