@@ -25,6 +25,7 @@ public class SpriteAssets : MonoBehaviour {
 	public Sprite fallWeatherTable;
 	public Sprite springWeatherTable;
 
+    public Sprite blankTile;
     public Sprite threePlayerButton;
     public Sprite fourPlayerButton;
     public Sprite fivePlayerButton;

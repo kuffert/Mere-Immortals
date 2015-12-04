@@ -132,7 +132,6 @@ public class Player {
         foreach (GameObject cardObject in cardObjects)
         {
             int i = cardObjects.IndexOf(cardObject);
-            Debug.Log(i);
             if (hand[i].isSelected)
             {
                 cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(sideBuffer + (i * gapBetweenCards), .3f, 10f));
