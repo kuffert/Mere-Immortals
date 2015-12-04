@@ -19,8 +19,6 @@ public class GameSystem : MonoBehaviour {
     public int startingFavor;
     public int favorToWin;
     public int numberOfCards;
-    public TextMesh playerDebugText;
-	public TextMesh favorDebugText;
 	public TextMesh weatherDebugText;
 	public TextMesh healthDebugText;
 	public TextMesh notifyPlayerDebugText;
@@ -43,6 +41,9 @@ public class GameSystem : MonoBehaviour {
 	private List<GameObject> displayedPlayedCards;
 
     private List<GameObject> cardsToWipe;
+
+    private List<GameObject> playerTiles;
+    private List<GameObject> playerTexts;
 
     // These are game-specific, but the rendering scripts will need access to these by using getters.
     private Vector2 currentWeatherVector;
@@ -82,23 +83,23 @@ public class GameSystem : MonoBehaviour {
         currentWeatherVector = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
-		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 4;
+		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 5;
         players = GameInfo.gameInfo.players;
         Debug.Log(players[0].cardBack);
         numberOfPlayers = GameInfo.gameInfo.numberOfPlayers;
-
-		playerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
-		favorDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
-		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
-		healthDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
-		notifyPlayerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 4;
-
-        playerDebugText.text = currentWeatherVector.x + ", " + currentWeatherVector.y;
+        
+		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
+		healthDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
+		notifyPlayerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
+        
         currentMoveOwner = players[0];
         displayedCards = players[0].showCards();
+
+        generatePlayerTilesAndText();
     }
 	
-	void Update () {
+	void Update () {    
+        movePlayerTilesAndText(players.IndexOf(currentMoveOwner));
 
         if (checkLose())
         {
@@ -113,10 +114,8 @@ public class GameSystem : MonoBehaviour {
         }
 
         // Show the current weather vector
-		playerDebugText.text = "Player: " + currentMoveOwner.characterName;
-		favorDebugText.text = "Favor: " + currentMoveOwner.favor;
 		weatherDebugText.text = Weather.weather.findStringByWeatherVector (currentWeatherVector);
-		healthDebugText.text = "Town Health: " + townHealth;
+		healthDebugText.text = "Town: " + townHealth;
         // Update card positions
         currentMoveOwner.updateCardPositions(displayedCards);
 
@@ -129,28 +128,27 @@ public class GameSystem : MonoBehaviour {
         }
     }
 	//put the weather marker at the location of currentWeatherVector
-    void resetWeatherMarker() {
-		weatherMarker.transform.position = new Vector2 ((float)-.21 + (float)(currentWeatherVector.x * 1.71), (float).79 + (float)(currentWeatherVector.y * 1.28));
+    void resetWeatherMarker(Vector2 weatherPrediciton) {
+		weatherMarker.transform.position = new Vector2 ((float)-.21 + (float)(weatherPrediciton.x * 1.71), (float).79 + (float)(weatherPrediciton.y * 1.28));
 	}
     // Happens when a player commits his cards. Changes the current player to the
     // next player, commits their cards, increments the number of people that have played,
     // and changes the card objects being shown in the game world.
-    // If the max number of players have played, The season will change,  
+    // If the max number of players have played, The season will change
     void commitMove()
-    { 
+    {
 		notifyPlayerDebugText.text = "";
         currentMoveOwner.commitCards();
         currentMoveOwner.showPlayedCards(displayedPlayedCards, players.IndexOf(currentMoveOwner));
         //place weather marker back to current weather position
-        resetWeatherMarker();
+        resetWeatherMarker(currentWeatherVector);
 
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
 
         //last player in the round, gets to save the day!
-		if (movesPlayed == numberOfPlayers - 1) {
-			calculateNewCurrentWeather();
-			resetWeatherMarker ();
+		if (movesPlayed == numberOfPlayers - 1) {   
+			resetWeatherMarker (predictCurrentWeather());
 			notifyPlayerDebugText.text = "Divine Intervention!!";
         }
 
@@ -160,7 +158,7 @@ public class GameSystem : MonoBehaviour {
             movesPlayed = 0;
             turnsPlayed++;
             calculateNewCurrentWeather();
-			resetWeatherMarker ();
+			resetWeatherMarker (currentWeatherVector);
             calculateDivineInterventionEffect();
             clearDisplayedCards(displayedPlayedCards);
             wipeMeUp();
@@ -237,6 +235,7 @@ public class GameSystem : MonoBehaviour {
         }
     }
 
+    // Switches to current season to be the one following the current.
 	public void changeSeason()
 	{
 		if (season.seasonName == "Summer")
@@ -260,6 +259,17 @@ public class GameSystem : MonoBehaviour {
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
+
+    // Returns a vector what the new current weather will be, should the DI player not play cards
+    private Vector2 predictCurrentWeather()
+    {
+        Vector2 cummulativeTotalOfPlayedCards = new Vector2(0, 0);
+        foreach (Player player in players)
+        {
+            cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
+        }
+        return cummulativeTotalOfPlayedCards + currentWeatherVector;
+    }
     
     // Once all players have played their cards, this function will calculate the new current weather 
     // based off of the cards the player's played.
@@ -278,6 +288,7 @@ public class GameSystem : MonoBehaviour {
     // Trims a given vector down to size so that it fits correctly in the weather grid.
     private Vector2 trimCummulativeVectorToWeatherGrid(Vector2 vectorToBeTrimmed)
     {
+        vectorToBeTrimmed += currentWeatherVector;
         int xMax = 2;
         int yMax = 2;
         int xMin = -2;
@@ -386,6 +397,60 @@ public class GameSystem : MonoBehaviour {
         foreach (Player player in players)
         {
             player.wipePlayedCards();
+        }
+    }
+
+    // Creates the player's favor text and tile images
+    private void generatePlayerTilesAndText()
+    {
+        playerTiles = new List<GameObject>();
+        playerTexts = new List<GameObject>();
+
+        float yLoc = .76f;
+        float xLoc = .12f;
+
+        foreach(Player player in players)
+        {
+            GameObject playerTile = new GameObject();
+            playerTile.AddComponent<SpriteRenderer>().sprite = SpriteAssets.spriteAssets.blankTile;
+            playerTile.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc, yLoc, 10f));
+            playerTile.transform.localScale = new Vector3(2f, 1f, 1f);
+            playerTiles.Add(playerTile);
+
+
+            GameObject playerText = new GameObject();
+            playerText.AddComponent<TextMesh>().text = player.characterName + ": " + player.favor;
+            playerText.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc, yLoc, 10f));
+            TextMesh playerTextMesh = playerText.GetComponent<TextMesh>();
+            playerTextMesh.anchor = TextAnchor.MiddleCenter;
+            playerTextMesh.alignment = TextAlignment.Left;
+            playerTextMesh.fontSize = 200;
+            playerTextMesh.characterSize = .025f;
+            playerText.GetComponent<MeshRenderer>().sortingOrder = 5;
+            playerTexts.Add(playerText);
+
+            yLoc -= .09f;
+        }
+    }
+
+    private void movePlayerTilesAndText(int indexOfCurrentPlayer)
+    {
+        float xLoc = .12f;
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            float yLoc = Camera.main.WorldToViewportPoint(playerTiles[i].transform.position).y;
+            if (i == indexOfCurrentPlayer)
+            {
+                playerTiles[i].transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc + .02f, yLoc, 10f));
+                playerTexts[i].transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc + .02f, yLoc, 10f));
+            }
+            else
+            {
+                playerTiles[i].transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc, yLoc, 10f));
+                playerTexts[i].transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc, yLoc, 10f));
+            }
+            playerTexts[i].GetComponent<TextMesh>().text = players[i].characterName + ": " + players[i].favor;
         }
     }
 }

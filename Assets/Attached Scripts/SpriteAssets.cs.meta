@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a8378cc6cd547d44c84cd4d4039933ca
-timeCreated: 1448838835
+timeCreated: 1449265212
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -25,6 +25,9 @@ MonoImporter:
       type: 3}
   - fallWeatherTable: {fileID: 21300000, guid: 1a8671de5795a44908e1fc8dd4fdc6fe, type: 3}
   - springWeatherTable: {fileID: 21300000, guid: cf261b7b10c2d4ce99770a0fc9cb669e,
+      type: 3}
+  - blankTile: {fileID: 21300000, guid: 75458931d446d6545b761344e69432cf, type: 3}
+  - threePlayerButton: {fileID: 21300000, guid: 15341c79e36859945b38f299295cab96,
       type: 3}
   - fourPlayerButton: {fileID: 21300000, guid: 93d963318e9729a439d9d0a957f67330, type: 3}
   - fivePlayerButton: {fileID: 21300000, guid: fa9c029ab1522f645ab2f1706e6cd1a6, type: 3}
