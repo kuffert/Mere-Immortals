@@ -28,6 +28,8 @@ public class GameSystem : MonoBehaviour {
 	public GameObject weatherSprite;
 	public GameObject weatherTableSprite;
 	public GameObject weatherMarker;
+	public GameObject RightPalm;
+	public GameObject RightThumb;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
@@ -187,6 +189,16 @@ public class GameSystem : MonoBehaviour {
         
         clearDisplayedCards(displayedCards);
         displayedCards = currentMoveOwner.showCards();
+		//print ((.6f/currentMoveOwner.hand.Count) * currentMoveOwner.hand.Count);
+		RightPalm.transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (
+			Camera.main.WorldToViewportPoint (displayedCards [displayedCards.Count - 1].transform.position).x + .075f,
+			.1f, 10f));
+
+		RightThumb.transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (
+			Camera.main.WorldToViewportPoint (displayedCards [displayedCards.Count - 1].transform.position).x + .075f,
+			.16f, 10f));
+
+
     }
 
     // Checks to see if, upon a click, the click should move a card.
