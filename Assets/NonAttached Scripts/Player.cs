@@ -75,7 +75,6 @@ public class Player {
         math = index + 1;
         math /= 10;
         float yOffset = .9f - math;
-
         for (int i = 0; i < playedCards.Count; i++)
         {
             GameObject cardImage = new GameObject();
@@ -85,7 +84,6 @@ public class Player {
             cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(rightSide + (i * (.1f / playedCards.Count)), yOffset, 10f));
             cardImages.Add(cardImage);
         }
-        //return cardImages;
     }
 
     // @Matt this shit too
