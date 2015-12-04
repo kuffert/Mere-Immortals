@@ -13,7 +13,6 @@ public class HideWeatherAndMarker : MonoBehaviour {
 	}
 
 	void onClick(){
-		print ("CLICKED!");
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		Physics.Raycast (ray, out hit);
