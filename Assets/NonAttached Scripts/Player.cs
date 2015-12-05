@@ -81,10 +81,29 @@ public class Player {
             cardImage.AddComponent<SpriteRenderer>();
             cardImage.GetComponent<SpriteRenderer>().sprite = this.cardBack;
             cardImage.transform.localScale = new Vector3(.25f, .25f, 0f);
-            cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(rightSide + (i * (.1f / playedCards.Count)), yOffset, 10f));
+            cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(rightSide + (i * .04f), yOffset, 10f));
             cardImages.Add(cardImage);
         }
     }
+
+    public void showPlayedCardsFaceUp(List<GameObject> cardImages, int index)
+    {
+        float math;
+        math = index + 1;
+        math /= 10;
+        float yOffset = .9f - math;
+
+        for (int i = 0; i < playedCards.Count; i++)
+        {
+            GameObject cardImage = new GameObject();
+            cardImage.AddComponent<SpriteRenderer>();
+            cardImage.GetComponent<SpriteRenderer>().sprite = playedCards[i].frontImage;
+            cardImage.transform.localScale = new Vector3(.25f, .25f, 0f);
+            cardImage.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(rightSide + (i * .04f), yOffset, 10f));
+            cardImages.Add(cardImage);
+        }
+    }
+
 
     // @Matt this shit too
     public void wipePlayedCards()

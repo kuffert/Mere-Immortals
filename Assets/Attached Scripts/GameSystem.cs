@@ -146,9 +146,15 @@ public class GameSystem : MonoBehaviour {
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
         movesPlayed++;
 
-        //last player in the round, gets to save the day!
-		if (movesPlayed == numberOfPlayers - 1) {   
-			resetWeatherMarker (predictCurrentWeather());
+        //last player in the round, gets to save the day! 
+		if (movesPlayed == numberOfPlayers - 1) {
+			calculateNewCurrentWeather();
+            resetWeatherMarker(predictCurrentWeather());
+            clearDisplayedCards(displayedPlayedCards);
+            foreach (Player p in players)
+            {
+                p.showPlayedCardsFaceUp(displayedPlayedCards, players.IndexOf(p));
+            }
 			notifyPlayerDebugText.text = "Divine Intervention!!";
         }
 
@@ -199,6 +205,7 @@ public class GameSystem : MonoBehaviour {
         }
     }
 
+    
     // Checks to see if, upon a click, the click should move a card.
     void checkForCardClicks()
     {
