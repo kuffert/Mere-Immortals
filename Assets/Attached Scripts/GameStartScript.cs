@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 public class GameStartScript : MonoBehaviour {
-    
     List<Player> players;
 
     List<GameObject> numberOfPlayersGameObjects;
@@ -154,7 +153,6 @@ public class GameStartScript : MonoBehaviour {
                     chosenCardBacks.Add(availableCardbacks[i]);
                     availableCardbacks.RemoveAt(i);
                     players.Add(newPlayer);
-                    Debug.Log(newPlayer.cardBack);
                     destroyAllButtons(availableCardBacksGameObjects);
                     availableCardBacksGameObjects.Clear();
 

@@ -49,6 +49,7 @@ public class GameSystem : MonoBehaviour {
     private Vector2 currentWeatherVector;
     private Sprite currentWeatherSprite;
     private Player currentMoveOwner;
+    private int indexOfCurrentDIPlayer;
 
     // number of people who have played cards on a turn
     private int movesPlayed;
@@ -85,7 +86,6 @@ public class GameSystem : MonoBehaviour {
 
 		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 5;
         players = GameInfo.gameInfo.players;
-        Debug.Log(players[0].cardBack);
         numberOfPlayers = GameInfo.gameInfo.numberOfPlayers;
         
 		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
@@ -96,7 +96,7 @@ public class GameSystem : MonoBehaviour {
         displayedCards = players[0].showCards();
 
         generatePlayerTilesAndText();
-        setDITile();
+        indexOfCurrentDIPlayer = setDITile();
     }
 	
 	void Update () {    
@@ -141,7 +141,6 @@ public class GameSystem : MonoBehaviour {
 		notifyPlayerDebugText.text = "";
         currentMoveOwner.commitCards();
         currentMoveOwner.showPlayedCards(displayedPlayedCards, players.IndexOf(currentMoveOwner));
-        //place weather marker back to current weather position
         resetWeatherMarker(currentWeatherVector);
 
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
@@ -149,7 +148,6 @@ public class GameSystem : MonoBehaviour {
 
         //last player in the round, gets to save the day! 
 		if (movesPlayed == numberOfPlayers - 1) {
-			calculateNewCurrentWeather();
             resetWeatherMarker(predictCurrentWeather());
             clearDisplayedCards(displayedPlayedCards);
             foreach (Player p in players)
@@ -165,13 +163,11 @@ public class GameSystem : MonoBehaviour {
             movesPlayed = 0;
             turnsPlayed++;
             calculateNewCurrentWeather();
-			resetWeatherMarker (currentWeatherVector);
+			resetWeatherMarker(currentWeatherVector);
             calculateDivineInterventionEffect();
             clearDisplayedCards(displayedPlayedCards);
             wipeMeUp();
-            setDITile();
-
-            // Current turn owner should not change.
+            indexOfCurrentDIPlayer = setDITile();
         }
         // Otherwise move the current player to the next index, looping around if needed.
         else
@@ -271,26 +267,36 @@ public class GameSystem : MonoBehaviour {
     // Returns a vector what the new current weather will be, should the DI player not play cards
     private Vector2 predictCurrentWeather()
     {
-        Vector2 cummulativeTotalOfPlayedCards = new Vector2(0, 0);
-        foreach (Player player in players)
-        {
-            cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
-        }
+        Vector2 cummulativeTotalOfPlayedCards = calculateTotalCardEffect();
         return trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards + currentWeatherVector);
     }
     
     // Once all players have played their cards, this function will calculate the new current weather 
     // based off of the cards the player's played.
     private void calculateNewCurrentWeather() {
-
-        Vector2 cummulativeTotalOfPlayedCards = new Vector2(0, 0);
-        foreach (Player player in players)
-        {
-            cummulativeTotalOfPlayedCards += player.calculateEffectOfPlayedCards();
-        }
-
-		currentWeatherVector =  trimCummulativeVectorToWeatherGrid(cummulativeTotalOfPlayedCards +currentWeatherVector);
+        // First, total all of the players cards (not the DI player) and trim them
+        Vector2 totalEffect = trimCummulativeVectorToWeatherGrid(calculateTotalCardEffect());
+        // Then add them to the current weather and trim
+        totalEffect = trimCummulativeVectorToWeatherGrid(totalEffect + currentWeatherVector);
+        // Then, add the last player's total effect
+        totalEffect += players[indexOfCurrentDIPlayer].calculateEffectOfPlayedCards();
+        // Then trim it again
+        currentWeatherVector = trimCummulativeVectorToWeatherGrid(totalEffect);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
+    }
+
+    // Calculates the total effect of all cards played by all players except the current DI player
+    private Vector3 calculateTotalCardEffect()
+    {
+        Vector2 cummulativeTotalOfPlayedCards = new Vector2(0, 0);
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (i != indexOfCurrentDIPlayer)
+            {
+                cummulativeTotalOfPlayedCards += players[i].calculateEffectOfPlayedCards();
+            }
+        }
+        return cummulativeTotalOfPlayedCards;
     }
 
     // Trims a given vector down to size so that it fits correctly in the weather grid.
@@ -341,7 +347,10 @@ public class GameSystem : MonoBehaviour {
     {
         foreach (Player player in players)
         {
-            player.adjustFavor(effectAmount);
+            if (player.playedCards.Count > 0)
+            {
+                player.adjustFavor(effectAmount);
+            }
         }
     }
     
@@ -463,12 +472,11 @@ public class GameSystem : MonoBehaviour {
     }
 
     // Changes the DI player's tile to the DI tile
-    private void setDITile()
+    private int setDITile()
     {
         int indexOfDIPlayer;
         if (players.IndexOf(currentMoveOwner) == 0)
         {
-            Debug.Log("bad");
             indexOfDIPlayer = players.Count - 1;
         }
         else
@@ -480,7 +488,6 @@ public class GameSystem : MonoBehaviour {
         {
             if (i == indexOfDIPlayer)
             {
-                Debug.Log(i + " changing DI tile");
                 playerTiles[i].GetComponent<SpriteRenderer>().sprite = SpriteAssets.spriteAssets.DITile;
             }
             else
@@ -488,5 +495,6 @@ public class GameSystem : MonoBehaviour {
                 playerTiles[i].GetComponent<SpriteRenderer>().sprite = SpriteAssets.spriteAssets.blankTile;
             }
         }
+        return indexOfDIPlayer;
     }
 }
