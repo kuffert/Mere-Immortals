@@ -104,14 +104,16 @@ public class GameSystem : MonoBehaviour {
 
         if (checkLose())
         {
-            Debug.Log("Game Over");
-            Application.Quit();
+            GameInfo.endGameNotification = "Game Over";
+			Destroy(this);
+			Application.LoadLevel (2);
         }
-
-        if (checkWin())
+		Player p = checkWin ();
+        if (p != null)
         {
-            Debug.Log("Winner!");
-            Application.Quit();
+            GameInfo.endGameNotification = "Winner! " + p.characterName;
+			Destroy(this);
+			Application.LoadLevel (2);
         }
 
         // Show the current weather vector
@@ -355,16 +357,17 @@ public class GameSystem : MonoBehaviour {
     }
     
     // Check if any player has won
-    private bool checkWin()
+    private Player checkWin()
     {
         foreach (Player player in players)
         {
             if (player.favor >= favorToWin)
             {
-                return true;
+
+                return player;
             }
         }
-        return false;
+        return null;
     }
 
     // Checks if the players have lost

@@ -54,4 +54,15 @@ public class SpriteAssets : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+	public void resetAllCardbacks(){
+		List<Sprite> cb = new List<Sprite> ();
+		cb.Add(cardAppollo);
+		cb.Add(cardAphorodite);
+		cb.Add(cardArtemis);
+		cb.Add(cardAthena);
+		cb.Add(cardPoseidon);
+		cb.Add(cardHades);
+		allCardbacks = cb;
+	}
 }

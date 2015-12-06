@@ -30,6 +30,8 @@ public class GameStartScript : MonoBehaviour {
         numberOfPlayers = 0;
         numberOfPlayersChosen = 0;
         availableCardbacks = SpriteAssets.spriteAssets.allCardbacks;
+		print(availableCardbacks.Count);
+		print (SpriteAssets.spriteAssets.allCardbacks.Count);
         startGamePhase = false;
         selectNumberOfPlayersPhase = true;
 	}
@@ -189,6 +191,8 @@ public class GameStartScript : MonoBehaviour {
             if (startText.GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
             {
                 GameInfo.gameInfo.players = players;
+				SpriteAssets.spriteAssets.resetAllCardbacks();
+				Destroy(this);
                 Application.LoadLevel("Game Scene");
             }
         }

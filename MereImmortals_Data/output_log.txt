@@ -15,7 +15,7 @@ Loading C:\Users\Matthew\Documents\GitHub\Mere-Immortals\MereImmortals_Data\Mana
 Platform assembly: C:\Users\Matthew\Documents\GitHub\Mere-Immortals\MereImmortals_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Matthew\Documents\GitHub\Mere-Immortals\MereImmortals_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Matthew\Documents\GitHub\Mere-Immortals\MereImmortals_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.478 seconds
+- Completed reload, in  0.497 seconds
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
