@@ -96,6 +96,7 @@ public class GameSystem : MonoBehaviour {
         displayedCards = players[0].showCards();
 
         generatePlayerTilesAndText();
+        setDITile();
     }
 	
 	void Update () {    
@@ -160,7 +161,7 @@ public class GameSystem : MonoBehaviour {
 
 		// If all players have played, enact divine intervention
         if (movesPlayed == numberOfPlayers)
-        {
+        {   
             movesPlayed = 0;
             turnsPlayed++;
             calculateNewCurrentWeather();
@@ -168,6 +169,7 @@ public class GameSystem : MonoBehaviour {
             calculateDivineInterventionEffect();
             clearDisplayedCards(displayedPlayedCards);
             wipeMeUp();
+            setDITile();
 
             // Current turn owner should not change.
         }
@@ -216,7 +218,6 @@ public class GameSystem : MonoBehaviour {
             Physics.Raycast(ray, out hit);
             if (displayedCards[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100)) {
                 currentMoveOwner.hand[i].isSelected = !currentMoveOwner.hand[i].isSelected;
-                Debug.Log("Kiss me lips");
 				//move the weather marker
 				moveWeatherMarker(currentMoveOwner.hand[i], currentMoveOwner.hand[i].isSelected);
             }
@@ -439,6 +440,7 @@ public class GameSystem : MonoBehaviour {
         }
     }
 
+    // Updates the tiles locations to show who's turn it is
     private void movePlayerTilesAndText(int indexOfCurrentPlayer)
     {
         float xLoc = .12f;
@@ -457,6 +459,34 @@ public class GameSystem : MonoBehaviour {
                 playerTexts[i].transform.position = Camera.main.ViewportToWorldPoint(new Vector3(xLoc, yLoc, 10f));
             }
             playerTexts[i].GetComponent<TextMesh>().text = players[i].characterName + ": " + players[i].favor;
+        }
+    }
+
+    // Changes the DI player's tile to the DI tile
+    private void setDITile()
+    {
+        int indexOfDIPlayer;
+        if (players.IndexOf(currentMoveOwner) == 0)
+        {
+            Debug.Log("bad");
+            indexOfDIPlayer = players.Count - 1;
+        }
+        else
+        {
+            indexOfDIPlayer = players.IndexOf(currentMoveOwner) - 1;
+        }
+
+        for (int i = 0; i < playerTiles.Count; i++)
+        {
+            if (i == indexOfDIPlayer)
+            {
+                Debug.Log(i + " changing DI tile");
+                playerTiles[i].GetComponent<SpriteRenderer>().sprite = SpriteAssets.spriteAssets.DITile;
+            }
+            else
+            {
+                playerTiles[i].GetComponent<SpriteRenderer>().sprite = SpriteAssets.spriteAssets.blankTile;
+            }
         }
     }
 }

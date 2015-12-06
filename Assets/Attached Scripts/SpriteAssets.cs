@@ -30,6 +30,7 @@ public class SpriteAssets : MonoBehaviour {
     public Sprite fourPlayerButton;
     public Sprite fivePlayerButton;
     public Sprite sixPlayerButton;
+    public Sprite DITile;
 
     public List<Sprite> allCardbacks;
 
