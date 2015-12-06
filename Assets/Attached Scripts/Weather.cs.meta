@@ -1,35 +1,35 @@
 fileFormatVersion: 2
 guid: 75dd1917710d8ca4bbcc71e57d5e69af
-timeCreated: 1447647243
+timeCreated: 1449442849
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - acidRain: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - heavyMist: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - scorching: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - drought: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - sandstorm: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - hurricane: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - warmRain: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - warm: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - heatWave: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - arid: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - downpour: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - rain: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - neutral: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - dry: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - desert: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - hail: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - snow: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - cooler: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - frosting: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - icing: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - blizzard: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - snowStorm: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - freezing: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - frozen: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
-  - iceStorm: {fileID: 21300000, guid: c10a7be82cd8e6e41bf338cb1c6783af, type: 3}
+  - acidRain: {fileID: 21300000, guid: 5d286655970981f46a75c527f13e3ea0, type: 3}
+  - heavyMist: {fileID: 21300000, guid: eb2fccdeeddfd544b8ff6e842a7215a3, type: 3}
+  - scorching: {fileID: 21300000, guid: e6dceeb6778ab4545886cb5273d03a29, type: 3}
+  - drought: {fileID: 21300000, guid: 979a0767563fa514bae5b78608ecc00b, type: 3}
+  - sandstorm: {fileID: 21300000, guid: cdf0ff06ec3218e429260ff4e3d64ac5, type: 3}
+  - hurricane: {fileID: 21300000, guid: 5cc3218b35bd39b42b1258509cfb64ed, type: 3}
+  - warmRain: {fileID: 21300000, guid: e1c247a294e29aa4898a3926511c8d0e, type: 3}
+  - warm: {fileID: 21300000, guid: 9a791b5ad68b77542b47629bdf7f4516, type: 3}
+  - heatWave: {fileID: 21300000, guid: bc07198e2899b094087e85b30387a791, type: 3}
+  - arid: {fileID: 21300000, guid: b078a2af4689fe840b5fe33301bbd807, type: 3}
+  - downpour: {fileID: 21300000, guid: cb96eba8c58488042b2de503a8b4de9f, type: 3}
+  - rain: {fileID: 21300000, guid: d832c7d28814ecf4f8f55c7a7ed1c085, type: 3}
+  - neutral: {instanceID: 0}
+  - dry: {fileID: 21300000, guid: 98364e669e0574347affff3438441f2c, type: 3}
+  - desert: {fileID: 21300000, guid: 46ec55ba76cbdd44da62141c418011eb, type: 3}
+  - hail: {fileID: 21300000, guid: 52517757f5cdf6147b408d3e712005ec, type: 3}
+  - snow: {fileID: 21300000, guid: 0b7b6a7b7d2bb454cb5ad96bf5e5a4a5, type: 3}
+  - cooler: {fileID: 21300000, guid: 4448dcc082b53a7489cca2119577706a, type: 3}
+  - frosting: {fileID: 21300000, guid: 70b87f6d84479b143a2d095fb56360aa, type: 3}
+  - icing: {fileID: 21300000, guid: 35966b574155b704a96275b5bc4f976e, type: 3}
+  - blizzard: {fileID: 21300000, guid: 4a1d6480c141ba3439e993aa13cbd9a4, type: 3}
+  - snowStorm: {fileID: 21300000, guid: f310e07183a5a75498723c2e7d89e9fb, type: 3}
+  - freezing: {fileID: 21300000, guid: 4b71abe7173d10b4c82b0e004ec6a95e, type: 3}
+  - frozen: {fileID: 21300000, guid: 83a602b452fe10c48a0204eb72925f8f, type: 3}
+  - iceStorm: {fileID: 21300000, guid: 6133b082de0d56a49bc429713d333d11, type: 3}
   - noWeatherFoundSprite: {fileID: 21300000, guid: 066cfa968fdc1c3429072c8c74c7946a,
       type: 3}
   executionOrder: 0

@@ -23,13 +23,14 @@ public class GameSystem : MonoBehaviour {
 	public TextMesh healthDebugText;
 	public TextMesh notifyPlayerDebugText;
     public TextMesh commitButton;
-	public GameObject weatherSprite;
+	public GameObject seasonButtonSprite;
 	public GameObject weatherTableSprite;
 	public GameObject weatherMarker;
 	public GameObject LeftPalm;
 	public GameObject LeftThumb;
 	public GameObject RightPalm;
 	public GameObject RightThumb;
+    public GameObject CurrentWeatherObject;
 
     // These are private and game-specific. They should not be visible outside of this class.
     private Season season;
@@ -81,7 +82,7 @@ public class GameSystem : MonoBehaviour {
 
     void Start() {
         season = new Summer();
-        weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
+        seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
         currentWeatherVector = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
@@ -100,14 +101,14 @@ public class GameSystem : MonoBehaviour {
 		LeftPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftHand;
 		LeftThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftThumb;
 		displayedCards = players[0].showCards();
-
-
+        
         generatePlayerTilesAndText();
         indexOfCurrentDIPlayer = setDITile();
     }
 	
 	void Update () {    
         movePlayerTilesAndText(players.IndexOf(currentMoveOwner));
+        CurrentWeatherObject.GetComponent<SpriteRenderer>().sprite = currentWeatherSprite;
 
         if (checkLose())
         {
@@ -273,7 +274,7 @@ public class GameSystem : MonoBehaviour {
 			season = new Summer();
 		}
 
-		weatherSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
+		seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
@@ -297,6 +298,7 @@ public class GameSystem : MonoBehaviour {
         // Then trim it again
         currentWeatherVector = trimCummulativeVectorToWeatherGrid(totalEffect);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
+        Debug.Log(currentWeatherSprite);
     }
 
     // Calculates the total effect of all cards played by all players except the current DI player
