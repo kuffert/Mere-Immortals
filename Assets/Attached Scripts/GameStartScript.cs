@@ -162,6 +162,10 @@ public class GameStartScript : MonoBehaviour {
 					                              availableLeftHands[i], availableLeftThumbs[i], availableRightHands[i], availableRightThumbs[i]);
                     chosenCardBacks.Add(availableCardbacks[i]);
                     availableCardbacks.RemoveAt(i);
+					availableLeftHands.RemoveAt (i); 
+					availableLeftThumbs.RemoveAt (i);
+					availableRightHands.RemoveAt (i);
+					availableRightThumbs.RemoveAt(i);
                     players.Add(newPlayer);
                     destroyAllButtons(availableCardBacksGameObjects);
                     availableCardBacksGameObjects.Clear();
