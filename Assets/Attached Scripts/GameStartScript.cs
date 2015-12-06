@@ -9,6 +9,11 @@ public class GameStartScript : MonoBehaviour {
 
     public List<Sprite> chosenCardBacks;
     public List<Sprite> availableCardbacks;
+	public List<Sprite> availableLeftHands;
+	public List<Sprite> availableLeftThumbs;
+	public List<Sprite> availableRightHands;
+	public List<Sprite> availableRightThumbs;
+
 
     public GameObject infoText;
     public GameObject startText;
@@ -30,8 +35,10 @@ public class GameStartScript : MonoBehaviour {
         numberOfPlayers = 0;
         numberOfPlayersChosen = 0;
         availableCardbacks = SpriteAssets.spriteAssets.allCardbacks;
-		print(availableCardbacks.Count);
-		print (SpriteAssets.spriteAssets.allCardbacks.Count);
+		availableLeftHands = SpriteAssets.spriteAssets.allPlayerLeftHands;
+		availableLeftThumbs = SpriteAssets.spriteAssets.allPlayerLeftThumbs;
+		availableRightHands = SpriteAssets.spriteAssets.allPlayerRightHands;
+		availableRightThumbs = SpriteAssets.spriteAssets.allPlayerRightThumbs;
         startGamePhase = false;
         selectNumberOfPlayersPhase = true;
 	}
@@ -151,7 +158,8 @@ public class GameStartScript : MonoBehaviour {
                 if (availableCardBacksGameObjects[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
                 {
                     numberOfPlayersChosen += 1;
-                    Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardbacks[i], 3);
+                    Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardbacks[i], 3,
+					                              availableLeftHands[i], availableLeftThumbs[i], availableRightHands[i], availableRightThumbs[i]);
                     chosenCardBacks.Add(availableCardbacks[i]);
                     availableCardbacks.RemoveAt(i);
                     players.Add(newPlayer);

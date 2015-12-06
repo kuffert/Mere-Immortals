@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a8378cc6cd547d44c84cd4d4039933ca
-timeCreated: 1449426522
+timeCreated: 1449440978
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -15,6 +15,39 @@ MonoImporter:
   - cardAthena: {fileID: 21300000, guid: d930b3d06759d5746b858ba386b16351, type: 3}
   - cardPoseidon: {fileID: 21300000, guid: 7b403e8887fe9984ab84a62f1ad22b7d, type: 3}
   - cardHades: {fileID: 21300000, guid: 9709a44531dd84d489b8392448a18f12, type: 3}
+  - leftHandAppollo: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab, type: 3}
+  - leftHandAphorodite: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab,
+      type: 3}
+  - leftHandArtemis: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab, type: 3}
+  - leftHandAthena: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab, type: 3}
+  - leftHandPoseidon: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab, type: 3}
+  - leftHandHades: {fileID: 21300000, guid: 1a76018d5f2632349a29f984a50209ab, type: 3}
+  - leftThumbAppollo: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2, type: 3}
+  - leftThumbAphorodite: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2,
+      type: 3}
+  - leftThumbArtemis: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2, type: 3}
+  - leftThumbAthena: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2, type: 3}
+  - leftThumbPoseidon: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2,
+      type: 3}
+  - leftThumbHades: {fileID: 21300000, guid: 580c37cf4b1cd60448abfc43c15ac6d2, type: 3}
+  - rightHandAppollo: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b, type: 3}
+  - rightHandAphorodite: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b,
+      type: 3}
+  - rightHandArtemis: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b, type: 3}
+  - rightHandAthena: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b, type: 3}
+  - rightHandPoseidon: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b,
+      type: 3}
+  - rightHandHades: {fileID: 21300000, guid: d304561cb7fbc774bbcf8f76d2ba592b, type: 3}
+  - rightThumbAppollo: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa,
+      type: 3}
+  - rightThumbAphorodite: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa,
+      type: 3}
+  - rightThumbArtemis: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa,
+      type: 3}
+  - rightThumbAthena: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa, type: 3}
+  - rightThumbPoseidon: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa,
+      type: 3}
+  - rightThumbHades: {fileID: 21300000, guid: 4c41d9c9bf065d5438e23f68884430aa, type: 3}
   - summerButton: {fileID: 21300000, guid: a71aa163f13187a49953f5139641a119, type: 3}
   - winterButton: {fileID: 21300000, guid: 2c7f73415b7a7e84f82b61dacffdc2de, type: 3}
   - fallButton: {fileID: 21300000, guid: df89c35b7f07d9844bc39df50e2b4b54, type: 3}

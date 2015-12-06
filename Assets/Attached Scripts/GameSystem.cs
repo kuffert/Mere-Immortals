@@ -26,6 +26,8 @@ public class GameSystem : MonoBehaviour {
 	public GameObject weatherSprite;
 	public GameObject weatherTableSprite;
 	public GameObject weatherMarker;
+	public GameObject LeftPalm;
+	public GameObject LeftThumb;
 	public GameObject RightPalm;
 	public GameObject RightThumb;
 
@@ -93,7 +95,12 @@ public class GameSystem : MonoBehaviour {
 		notifyPlayerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
         
         currentMoveOwner = players[0];
-        displayedCards = players[0].showCards();
+		RightPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.rightHand;
+		RightThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.rightThumb;
+		LeftPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftHand;
+		LeftThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftThumb;
+		displayedCards = players[0].showCards();
+
 
         generatePlayerTilesAndText();
         indexOfCurrentDIPlayer = setDITile();
@@ -193,6 +200,11 @@ public class GameSystem : MonoBehaviour {
         
         clearDisplayedCards(displayedCards);
         displayedCards = currentMoveOwner.showCards();
+		RightPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.rightHand;
+		RightThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.rightThumb;
+		LeftPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftHand;
+		LeftThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftThumb;
+
         if (displayedCards.Count > 0)
         {
             RightPalm.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(

@@ -14,11 +14,21 @@ public class Player {
     private float sideBuffer = .2f;
     private float rightSide = .8f;
 
-    public Player(string characterName, Sprite cardBack, int startingFavor)
+
+	public Sprite leftHand;
+	public Sprite leftThumb;
+	public Sprite rightHand;
+	public Sprite rightThumb;
+
+    public Player(string characterName, Sprite cardBack, int startingFavor, Sprite lefthand, Sprite leftthumb, Sprite righthand, Sprite rightthumb)
     {
         this.characterName = characterName;
         this.favor = startingFavor;
         this.cardBack = cardBack;
+		this.leftHand = lefthand;
+		this.leftThumb = leftthumb;
+		this.rightHand = righthand;
+		this.rightThumb = rightthumb;
         drawCards();
         gapBetweenCards = .6f / hand.Count;
     }
