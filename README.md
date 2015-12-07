@@ -6,5 +6,5 @@
 <br>
 <div>This game was our capstone project for GAME3800: Game Development and Production. It is designed to be played on a tablet for 4-6 players at a time, ages 10 and up. This game was made entirely with Unity 5, GIMP 2, and Ableton Live 9.<br>
 The directions on how to play this game can be found in <a href="https://docs.google.com/a/husky.neu.edu/presentation/d/1at-cUoMz-IpqeTHpi3lT3VGBf4Uj2GRIwQLh3CJWtIU/edit?usp=sharing">this Google Presentaiton here.</a><br>
-You can find the Design Document for Mere Immortals <a href="https://docs.google.com/presentation/d/1XCd4vlaXvmuXymxg23Ab6nrfIGiLnawOscj-l-fnm4w/edit?usp=sharing">here</a>, and the Art Bible can be <a href="https://docs.google.com/presentation/d/1aHXqmn15EXc6W8pEG9EIETz5fSrJV24bO9zf6DgmQKE/edit?usp=sharing"></a>
+You can find the Design Document for Mere Immortals <a href="https://docs.google.com/presentation/d/1XCd4vlaXvmuXymxg23Ab6nrfIGiLnawOscj-l-fnm4w/edit?usp=sharing">here</a>, and the Art Bible can be <a href="https://docs.google.com/presentation/d/1aHXqmn15EXc6W8pEG9EIETz5fSrJV24bO9zf6DgmQKE/edit?usp=sharing">found here</a>
 </div>
