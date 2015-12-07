@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 
 // Chris Kuffert 11/12/15
@@ -48,6 +49,11 @@ public class GameSystem : MonoBehaviour {
     private List<GameObject> playerTiles;
     private List<GameObject> playerTexts;
 
+    public GameObject panel;
+    public GameObject playerTurnText;
+    //public GameObject turnButton;
+    public Button button;
+
     // These are game-specific, but the rendering scripts will need access to these by using getters.
     private Vector2 currentWeatherVector;
     private Sprite currentWeatherSprite;
@@ -81,6 +87,9 @@ public class GameSystem : MonoBehaviour {
     }
 
     void Start() {
+        panel.SetActive(true);
+        playerTurnText.GetComponent<Text>().text = "Player 1's Turn";
+
         season = new Summer();
         seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
@@ -103,7 +112,6 @@ public class GameSystem : MonoBehaviour {
 		LeftPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftHand;
 		LeftThumb.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.leftThumb;
 		displayedCards = players[0].showCards();
-        
         generatePlayerTilesAndText();
         indexOfCurrentDIPlayer = setDITile();
     }
@@ -156,6 +164,7 @@ public class GameSystem : MonoBehaviour {
         resetWeatherMarker(currentWeatherVector);
 
         // increments the number of people who have played during this TURN, NOT DURING THE ROUND
+        
         movesPlayed++;
 
         //last player in the round, gets to save the day! 
@@ -218,6 +227,9 @@ public class GameSystem : MonoBehaviour {
                 Camera.main.WorldToViewportPoint(displayedCards[displayedCards.Count - 1].transform.position).x + .075f,
                 .16f, 10f));
         }
+
+        panel.SetActive(true);
+        playerTurnText.GetComponent<Text>().text = currentMoveOwner.characterName + "'s Turn";
     }
 
     
