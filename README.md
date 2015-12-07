@@ -1,6 +1,6 @@
 # Mere-Immortals
 
-<a href="https://drive.google.com/a/husky.neu.edu/folderview?id=0B1v3dzqXEoubMzVSa2FjSW9zZm8&usp=sharing">Link to the project .zip</a>
+<a href="https://drive.google.com/open?id=0B3jwOSPEN_CnVkx6c0dDWjNFYXM">Link to the project .zip</a>
 
 <div>Mere Immortals is a tablet-based digital card game designed around Ancient Grecian Mythology, where players face off controlling the weather, and the destiny of a small Town. Select a Greek God or Goddess and compete for the favor of The Townsfolk, blessing them with good weather and fortune. But again, turn the tides of nature against The Town to bring opponents down on their turns to sabotage others and gain the lead.</div><br>
 <br>
