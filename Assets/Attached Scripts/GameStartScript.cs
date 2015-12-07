@@ -43,8 +43,8 @@ public class GameStartScript : MonoBehaviour {
 		availableLeftThumbs = SpriteAssets.spriteAssets.allPlayerLeftThumbs;
 		availableRightHands = SpriteAssets.spriteAssets.allPlayerRightHands;
 		availableRightThumbs = SpriteAssets.spriteAssets.allPlayerRightThumbs;
-        godNames.Add("Appollo");
-        godNames.Add("Aphorodite");
+        godNames.Add("Apollo");
+        godNames.Add("Aphrodite");
         godNames.Add("Artemis");
         godNames.Add("Athena");
         godNames.Add("Poseidon");

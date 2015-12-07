@@ -86,9 +86,6 @@ public class GameSystem : MonoBehaviour {
     }
 
     void Start() {
-        panel.SetActive(true);
-        playerTurnText.GetComponent<Text>().text = "Player 1's Turn";
-
         season = new Summer();
         seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
@@ -100,6 +97,9 @@ public class GameSystem : MonoBehaviour {
 		commitButton.GetComponent<MeshRenderer> ().sortingOrder = 5;
         players = GameInfo.gameInfo.players;
         numberOfPlayers = GameInfo.gameInfo.numberOfPlayers;
+
+		panel.SetActive(true);
+		playerTurnText.GetComponent<Text>().text = players[0].characterName + "'s Turn";
         
 		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
 		healthDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
