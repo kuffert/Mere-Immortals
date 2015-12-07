@@ -54,6 +54,11 @@ public class SpriteAssets : MonoBehaviour {
 	public Sprite fallWeatherTable;
 	public Sprite springWeatherTable;
 
+	public AudioClip summerSong;
+	public AudioClip winterSong;
+	public AudioClip fallSong;
+	public AudioClip springSong;
+
     public Sprite blankTile;
     public Sprite threePlayerButton;
     public Sprite fourPlayerButton;

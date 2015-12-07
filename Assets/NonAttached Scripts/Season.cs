@@ -9,6 +9,7 @@ public abstract class Season
     public static List<Vector2> sometimesGoodWeatherEffects;
     public Sprite seasonButtonSprite;
 	public Sprite seasonWeatherTable;
+	public AudioClip seasonSong;
 	public string seasonName;
 
     public List<Vector2> getAlwaysBadWeatherEffects()
@@ -38,6 +39,7 @@ public class Summer : Season
     {
         seasonButtonSprite = SpriteAssets.spriteAssets.summerButton;
 		seasonWeatherTable = SpriteAssets.spriteAssets.summerWeatherTable;
+		seasonSong = SpriteAssets.spriteAssets.summerSong;
 		seasonName = "Summer";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(1, 0));
@@ -58,6 +60,7 @@ public class Fall : Season
     {
         seasonButtonSprite = SpriteAssets.spriteAssets.fallButton;
 		seasonWeatherTable = SpriteAssets.spriteAssets.fallWeatherTable;
+		seasonSong = SpriteAssets.spriteAssets.fallSong;
         seasonName = "Fall";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));
@@ -78,6 +81,7 @@ public class Winter : Season
     {
         seasonButtonSprite = SpriteAssets.spriteAssets.winterButton;
 		seasonWeatherTable = SpriteAssets.spriteAssets.winterWeatherTable;
+		seasonSong = SpriteAssets.spriteAssets.winterSong;
         seasonName = "Winter";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(-1, 0));
@@ -98,6 +102,7 @@ public class Spring : Season
     {
         seasonButtonSprite = SpriteAssets.spriteAssets.springButton;
 		seasonWeatherTable = SpriteAssets.spriteAssets.springWeatherTable;
+		seasonSong = SpriteAssets.spriteAssets.springSong;
         seasonName = "Spring";
         sometimesGoodWeatherEffects = new List<Vector2>();
         sometimesGoodWeatherEffects.Add(new Vector2(0, 1));

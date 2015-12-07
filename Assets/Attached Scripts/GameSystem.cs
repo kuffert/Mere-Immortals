@@ -84,6 +84,8 @@ public class GameSystem : MonoBehaviour {
         season = new Summer();
         seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
+		weatherTableSprite.GetComponent<AudioSource> ().clip = season.seasonSong;
+		weatherTableSprite.GetComponent<AudioSource> ().Play ();
         currentWeatherVector = new Vector2(0, 0);
         currentWeatherSprite = Weather.weather.findSpriteByWeatherVector(currentWeatherVector);
 
@@ -276,6 +278,8 @@ public class GameSystem : MonoBehaviour {
 
 		seasonButtonSprite.GetComponent<SpriteRenderer>().sprite = season.seasonButtonSprite;
 		weatherTableSprite.GetComponent<SpriteRenderer> ().sprite = season.seasonWeatherTable;
+		weatherTableSprite.GetComponent<AudioSource> ().clip = season.seasonSong;
+		weatherTableSprite.GetComponent<AudioSource> ().Play ();
 		Debug.Log("Season changed to "+ season.seasonName);
 	}
 
