@@ -22,7 +22,6 @@ public class GameSystem : MonoBehaviour {
     public int numberOfCards;
 	public TextMesh weatherDebugText;
 	public TextMesh healthDebugText;
-	public TextMesh notifyPlayerDebugText;
     public TextMesh commitButton;
 	public GameObject seasonButtonSprite;
 	public GameObject weatherTableSprite;
@@ -104,7 +103,6 @@ public class GameSystem : MonoBehaviour {
         
 		weatherDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
 		healthDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
-		notifyPlayerDebugText.GetComponent<MeshRenderer> ().sortingOrder = 5;
         
         currentMoveOwner = players[0];
 		RightPalm.GetComponent<SpriteRenderer>().sprite = currentMoveOwner.rightHand;
@@ -158,7 +156,6 @@ public class GameSystem : MonoBehaviour {
     // If the max number of players have played, The season will change
     void commitMove()
     {
-		notifyPlayerDebugText.text = "";
         currentMoveOwner.commitCards();
         currentMoveOwner.showPlayedCards(displayedPlayedCards, players.IndexOf(currentMoveOwner));
         resetWeatherMarker(currentWeatherVector);
@@ -175,7 +172,6 @@ public class GameSystem : MonoBehaviour {
             {
                 p.showPlayedCardsFaceUp(displayedPlayedCards, players.IndexOf(p));
             }
-			notifyPlayerDebugText.text = "Divine Intervention!!";
         }
 
 		// If all players have played, enact divine intervention

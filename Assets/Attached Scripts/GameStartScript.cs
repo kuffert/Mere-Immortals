@@ -6,6 +6,7 @@ public class GameStartScript : MonoBehaviour {
 
     List<GameObject> numberOfPlayersGameObjects;
     List<GameObject> availableCardBacksGameObjects;
+    List<GameObject> availableGodNames;
 
     public List<Sprite> chosenCardBacks;
     public List<Sprite> availableCardbacks;
@@ -13,6 +14,7 @@ public class GameStartScript : MonoBehaviour {
 	public List<Sprite> availableLeftThumbs;
 	public List<Sprite> availableRightHands;
 	public List<Sprite> availableRightThumbs;
+    public List<string> godNames;
 
 
     public GameObject infoText;
@@ -31,6 +33,8 @@ public class GameStartScript : MonoBehaviour {
 	void Start () {
         numberOfPlayersGameObjects = new List<GameObject>();
         availableCardBacksGameObjects = new List<GameObject>();
+        availableGodNames = new List<GameObject>();
+        godNames = new List<string>();
         players = new List<Player>();
         numberOfPlayers = 0;
         numberOfPlayersChosen = 0;
@@ -39,6 +43,12 @@ public class GameStartScript : MonoBehaviour {
 		availableLeftThumbs = SpriteAssets.spriteAssets.allPlayerLeftThumbs;
 		availableRightHands = SpriteAssets.spriteAssets.allPlayerRightHands;
 		availableRightThumbs = SpriteAssets.spriteAssets.allPlayerRightThumbs;
+        godNames.Add("Appollo");
+        godNames.Add("Aphorodite");
+        godNames.Add("Artemis");
+        godNames.Add("Athena");
+        godNames.Add("Poseidon");
+        godNames.Add("Hades");
         startGamePhase = false;
         selectNumberOfPlayersPhase = true;
 	}
@@ -118,7 +128,7 @@ public class GameStartScript : MonoBehaviour {
                     GameInfo.gameInfo.numberOfPlayers = numberOfPlayers;
                     infoText.GetComponent<TextMesh>().text = numberOfPlayers + " Players";
                     selectCardBackingPhase = true;
-                    destroyAllButtons(numberOfPlayersGameObjects);
+                    destroyListOfGameObjects(numberOfPlayersGameObjects);
                     numberOfPlayersGameObjects.Clear();
                     break;
                 }
@@ -139,8 +149,20 @@ public class GameStartScript : MonoBehaviour {
             cardObject.AddComponent<BoxCollider>();
             cardObject.transform.localScale = new Vector3(.5f, .5f, 1f);
             cardObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(objectXLoc + (currentCardIndex * .1f), .6f, 10f));
+
+            GameObject godName = new GameObject();
+            godName.AddComponent<TextMesh>().text = godNames[currentCardIndex];
+            TextMesh godNameTextMesh = godName.GetComponent<TextMesh>();
+            godNameTextMesh.characterSize = .025f;
+            godNameTextMesh.fontSize = 150;
+            godNameTextMesh.color = Color.black;
+            godNameTextMesh.alignment = TextAlignment.Center;
+            godNameTextMesh.anchor = TextAnchor.MiddleCenter;
+            godName.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(objectXLoc + (currentCardIndex * .1f), .45f, 10f));
+            
             currentCardIndex++;
             availableCardBacksGameObjects.Add(cardObject);
+            availableGodNames.Add(godName);
         }
 
     }
@@ -158,17 +180,20 @@ public class GameStartScript : MonoBehaviour {
                 if (availableCardBacksGameObjects[i].GetComponent<BoxCollider>().Raycast(ray, out hit, 100))
                 {
                     numberOfPlayersChosen += 1;
-                    Player newPlayer = new Player("Player " + numberOfPlayersChosen, availableCardbacks[i], 3,
+                    Player newPlayer = new Player(godNames[i], availableCardbacks[i], 3,
 					                              availableLeftHands[i], availableLeftThumbs[i], availableRightHands[i], availableRightThumbs[i]);
                     chosenCardBacks.Add(availableCardbacks[i]);
+                    godNames.RemoveAt(i);
                     availableCardbacks.RemoveAt(i);
 					availableLeftHands.RemoveAt (i); 
 					availableLeftThumbs.RemoveAt (i);
 					availableRightHands.RemoveAt (i);
 					availableRightThumbs.RemoveAt(i);
                     players.Add(newPlayer);
-                    destroyAllButtons(availableCardBacksGameObjects);
+                    destroyListOfGameObjects(availableCardBacksGameObjects);
                     availableCardBacksGameObjects.Clear();
+                    destroyListOfGameObjects(availableGodNames);
+                    availableGodNames.Clear();
 
                     if (numberOfPlayersChosen >= numberOfPlayers)
                     {
@@ -185,7 +210,7 @@ public class GameStartScript : MonoBehaviour {
         }
     }
 
-    void destroyAllButtons(List<GameObject> gameObjects)
+    void destroyListOfGameObjects(List<GameObject> gameObjects)
     {
         foreach(GameObject button in gameObjects)
         {

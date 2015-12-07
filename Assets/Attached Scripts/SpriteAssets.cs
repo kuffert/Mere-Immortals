@@ -127,54 +127,44 @@ public class SpriteAssets : MonoBehaviour {
     }
 
 	public void resetAllCardbacks(){
-		List<Sprite> cb = new List<Sprite> ();
-		cb.Add(cardAppollo);
-		cb.Add(cardAphorodite);
-		cb.Add(cardArtemis);
-		cb.Add(cardAthena);
-		cb.Add(cardPoseidon);
-		cb.Add(cardHades);
-		allCardbacks = cb;
+        allCardbacks.Clear();
+		allCardbacks.Add(cardAppollo);
+        allCardbacks.Add(cardAphorodite);
+        allCardbacks.Add(cardArtemis);
+        allCardbacks.Add(cardAthena);
+        allCardbacks.Add(cardPoseidon);
+        allCardbacks.Add(cardHades);
 
-		cb.Clear();
-		cb.Add(leftHandAppollo);
-		cb.Add(leftHandAphorodite);
-		cb.Add(leftHandArtemis);
-		cb.Add(leftHandAthena);
-		cb.Add(leftHandPoseidon);
-		cb.Add(leftHandHades);
-		allPlayerLeftHands = cb;
+        allPlayerLeftHands.Clear();
+        allPlayerLeftHands.Add(leftHandAppollo);
+        allPlayerLeftHands.Add(leftHandAphorodite);
+        allPlayerLeftHands.Add(leftHandArtemis);
+        allPlayerLeftHands.Add(leftHandAthena);
+        allPlayerLeftHands.Add(leftHandPoseidon);
+        allPlayerLeftHands.Add(leftHandHades);
 
-		cb.Clear ();
-		cb.Add(leftThumbAppollo);
-		cb.Add(leftThumbAphorodite);
-		cb.Add(leftThumbArtemis);
-		cb.Add(leftThumbAthena);
-		cb.Add(leftThumbPoseidon);
-		cb.Add(leftThumbHades);
-		allPlayerLeftThumbs = cb;
-
-
-		cb.Clear();
-		cb.Add(rightHandAppollo);
-		cb.Add(rightHandAphorodite);
-		cb.Add(rightHandArtemis);
-		cb.Add(rightHandAthena);
-		cb.Add(rightHandPoseidon);
-		cb.Add(rightHandHades);
-		allPlayerRightHands = cb;
+		allPlayerLeftThumbs.Clear ();
+		allPlayerLeftThumbs.Add(leftThumbAppollo);
+		allPlayerLeftThumbs.Add(leftThumbAphorodite);
+		allPlayerLeftThumbs.Add(leftThumbArtemis);
+		allPlayerLeftThumbs.Add(leftThumbAthena);
+		allPlayerLeftThumbs.Add(leftThumbPoseidon);
+		allPlayerLeftThumbs.Add(leftThumbHades);
+        
+		allPlayerRightHands.Clear();
+		allPlayerRightHands.Add(rightHandAppollo);
+		allPlayerRightHands.Add(rightHandAphorodite);
+		allPlayerRightHands.Add(rightHandArtemis);
+		allPlayerRightHands.Add(rightHandAthena);
+		allPlayerRightHands.Add(rightHandPoseidon);
+		allPlayerRightHands.Add(rightHandHades);
 		
-		cb.Clear ();
-		cb.Add(rightThumbAppollo);
-		cb.Add(rightThumbAphorodite);
-		cb.Add(rightThumbArtemis);
-		cb.Add(rightThumbAthena);
-		cb.Add(rightThumbPoseidon);
-		cb.Add(rightThumbHades);
-		allPlayerRightThumbs = cb;
-
-
-
-
+		allPlayerRightThumbs.Clear ();
+		allPlayerRightThumbs.Add(rightThumbAppollo);
+		allPlayerRightThumbs.Add(rightThumbAphorodite);
+		allPlayerRightThumbs.Add(rightThumbArtemis);
+		allPlayerRightThumbs.Add(rightThumbAthena);
+		allPlayerRightThumbs.Add(rightThumbPoseidon);
+		allPlayerRightThumbs.Add(rightThumbHades);
 	}
 }
